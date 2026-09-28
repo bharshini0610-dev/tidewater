@@ -20,7 +20,7 @@ Tools: docker, k3d ≥ 5.7, kubectl, helm, kustomize, python3. On Windows use WS
 
 ### Through the pipeline (normal path)
 1. Merge to `main` (or *Run workflow* with `release`).
-2. The pipeline: lint/test → Terraform checks → **build once** (pushes `ghcr.io/<owner>/settle-api`,
+2. The pipeline: lint/test → Terraform checks → **build once** (OCI image artifact `image-<release>`, pushed unchanged into the cluster registry,
    records the digest) → trivy scan → k3d cluster seeded with the **current production digest**
    (`deploy/releases/production.json`) → migration Job (expand-only) → rollout by digest →
    **post-deploy verification** → promote *or* **automatic rollback**.

@@ -23,3 +23,9 @@ options:
         nodeFilters: ["server:*", "agent:*"]
       - arg: --kubelet-arg=eviction-hard=nodefs.available<10%,imagefs.available<10%
         nodeFilters: ["server:*", "agent:*"]
+# Local image registry: host pushes to localhost:5050, nodes pull k3d-registry.localhost:5050.
+registries:
+  create:
+    name: registry.localhost
+    host: "0.0.0.0"
+    hostPort: "5050"

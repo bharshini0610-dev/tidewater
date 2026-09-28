@@ -123,77 +123,69 @@ jobs:
     needs: [lint-test]
     runs-on: ubuntu-24.04
     timeout-minutes: 20
-    permissions:
-      contents: read
-      packages: write
     outputs:
-      image: ${{ steps.meta.outputs.image }}
-      digest: ${{ steps.build.outputs.digest }}
+      digest: ${{ steps.digest.outputs.digest }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Apply release-candidate regression (reproduces the untrusted 1.9.1-rc image)
         if: env.RELEASE == '1.9.1-rc'
         run: git apply images/settle-api-1.9.1-rc/regression.patch
-      - id: meta
-        run: echo "image=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/settle-api" >> "$GITHUB_OUTPUT"
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
-      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - id: build
-        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+      # Built exactly once, exported as an OCI image layout. Its manifest digest is the
+      # identity of the release: scan, deploy, rollback and promotion all use it.
+      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
           file: app/Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
           build-args: |
             APP_VERSION=${{ env.RELEASE }}
             SOURCE_URL=${{ github.server_url }}/${{ github.repository }}
-          tags: |
-            ${{ steps.meta.outputs.image }}:${{ env.RELEASE }}
-            ${{ steps.meta.outputs.image }}:${{ env.RELEASE }}-${{ github.sha }}
+          outputs: type=oci,dest=/tmp/settle-api.oci.tar,name=settle-api:${{ env.RELEASE }}
           provenance: false
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Record the immutable artifact
+      - id: digest
         run: |
+          mkdir -p image/oci && tar -xf /tmp/settle-api.oci.tar -C image/oci
+          digest=$(jq -r '.manifests[0].digest' image/oci/index.json)
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+          echo "$digest" > image/DIGEST && echo "$RELEASE" > image/VERSION
           {
             echo "### Build (once) — settle-api ${RELEASE}"
             echo "Every later stage uses exactly this digest; tags are never deployed."
             echo '```'
-            echo "${{ steps.meta.outputs.image }}@${{ steps.build.outputs.digest }}"
+            echo "settle-api@$digest"
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: image-${{ env.RELEASE }}
+          path: image/
+          retention-days: 90
 
   scan:
     needs: [build]
-    if: github.event_name != 'pull_request'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
-    permissions:
-      contents: read
-      packages: read
-    env:
-      REF: ${{ needs.build.outputs.image }}@${{ needs.build.outputs.digest }}
     steps:
-      - name: Trivy — fail on fixable HIGH/CRITICAL vulnerabilities, secrets, misconfig
-        env:
-          TRIVY_USERNAME: ${{ github.actor }}
-          TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: image-${{ env.RELEASE }}
+          path: image
+      - name: Trivy — fail on fixable HIGH/CRITICAL vulnerabilities and embedded secrets
         run: |
-          docker run --rm -e TRIVY_USERNAME -e TRIVY_PASSWORD -v "$PWD:/out" aquasec/trivy:0.74.0 image \
+          test "$(cat image/DIGEST)" = "${{ needs.build.outputs.digest }}"
+          docker run --rm -v "$PWD:/w" aquasec/trivy:0.74.0 image --input /w/image/oci \
             --scanners vuln,secret --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 \
-            --format table --output /out/trivy.txt "$REF" || { cat trivy.txt; exit 1; }
+            --format table --output /w/trivy.txt || { cat trivy.txt; exit 1; }
           cat trivy.txt
-          docker run --rm -e TRIVY_USERNAME -e TRIVY_PASSWORD -v "$PWD:/out" aquasec/trivy:0.74.0 image \
-            --format cyclonedx --output /out/sbom.cdx.json "$REF"
-          { echo "### Image scan (trivy 0.74.0) — PASS"; echo '```'; tail -n 25 trivy.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          docker run --rm -v "$PWD:/w" aquasec/trivy:0.74.0 image --input /w/image/oci \
+            --format cyclonedx --output /w/sbom.cdx.json
+          { echo "### Image scan (trivy 0.74.0) — PASS for settle-api@$(cat image/DIGEST)"; echo '```'; tail -n 25 trivy.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
-          name: scan-and-sbom
+          name: scan-and-sbom-${{ env.RELEASE }}
           path: |
             trivy.txt
             sbom.cdx.json
@@ -205,25 +197,34 @@ jobs:
     timeout-minutes: 50
     permissions:
       contents: write   # promote the production pointer + push evidence branch
-      packages: read
+      actions: read     # download the current production image artifact from its run
     env:
-      IMAGE_REF: ${{ needs.build.outputs.image }}@${{ needs.build.outputs.digest }}
-      REGISTRY_USER: ${{ github.actor }}
-      REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REGISTRY: localhost:5050                   # k3d registry, as seen from the runner
+      CLUSTER_REGISTRY: k3d-registry.localhost:5050  # same registry, as seen from the nodes
+      IMAGE_REF: k3d-registry.localhost:5050/settle-api@${{ needs.build.outputs.digest }}
       EVIDENCE: out/evidence
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-      - name: Install k3d, kustomize, playwright
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: image-${{ env.RELEASE }}
+          path: image
+      - name: Install k3d, kustomize, crane, playwright
         run: |
+          curl -sSL https://github.com/google/go-containerregistry/releases/download/v0.22.1/go-containerregistry_Linux_x86_64.tar.gz | sudo tar -xz -C /usr/local/bin crane
           curl -sSL "https://github.com/k3d-io/k3d/releases/download/${K3D_VERSION}/k3d-linux-amd64" -o k3d && sudo install k3d /usr/local/bin/k3d && rm k3d
           curl -sSL "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz" | sudo tar -xz -C /usr/local/bin
           pip install pyyaml==6.0.3 playwright==1.63.0 && python -m playwright install --with-deps chromium >/dev/null
           mkdir -p "$EVIDENCE"
-      - name: Create local cluster (k3d)
-        run: k3d cluster create --config local/k3d-cluster.yaml --wait --timeout 180s
+      - name: Create local cluster (k3d) with its image registry
+        run: |
+          k3d cluster create --config local/k3d-cluster.yaml --wait --timeout 180s
+          pushed=$(crane push --insecure image/oci "$REGISTRY/settle-api:${RELEASE}")
+          echo "pushed $pushed"
+          [[ "$pushed" == *"@${{ needs.build.outputs.digest }}" ]] || { echo "digest changed in transit"; exit 1; }
       - name: Install platform (ingress-nginx, Prometheus, Alertmanager, Grafana)
         run: |
           scripts/install-platform.sh
@@ -233,10 +234,19 @@ jobs:
 
       - name: Seed cluster with current production release
         id: baseline
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [[ -f deploy/releases/production.json ]]; then
-            prod_ref=$(jq -r '.image + "@" + .digest' deploy/releases/production.json)
             prod_ver=$(jq -r .version deploy/releases/production.json)
+            prod_digest=$(jq -r .digest deploy/releases/production.json)
+            prod_run=$(jq -r .run_id deploy/releases/production.json)
+            prod_ref="$CLUSTER_REGISTRY/settle-api@$prod_digest"
+            if [[ "$prod_ref" != "$IMAGE_REF" ]]; then
+              gh run download "$prod_run" -R "$GITHUB_REPOSITORY" -n "image-$prod_ver" -D prod-image
+              pushed=$(crane push --insecure prod-image/oci "$REGISTRY/settle-api:prod-$prod_ver")
+              [[ "$pushed" == *"@$prod_digest" ]] || { echo "production artifact digest mismatch"; exit 1; }
+            fi
           fi
           if [[ -n "${prod_ref:-}" && "$prod_ref" != "$IMAGE_REF" ]]; then
             echo "### Current production: $prod_ver" >> "$GITHUB_STEP_SUMMARY"
@@ -319,9 +329,9 @@ jobs:
       - name: Promote — record new production pointer
         if: steps.verify.outcome == 'success' && github.ref == 'refs/heads/main'
         run: |
-          jq -n --arg v "$RELEASE" --arg i "${{ needs.build.outputs.image }}" --arg d "${{ needs.build.outputs.digest }}" \
+          jq -n --arg v "$RELEASE" --arg d "${{ needs.build.outputs.digest }}" \
                 --arg r "$GITHUB_RUN_ID" --arg s "$GITHUB_SHA" \
-                '{version:$v, image:$i, digest:$d, run_id:$r, commit:$s}' > deploy/releases/production.json
+                '{version:$v, image:"settle-api", digest:$d, run_id:$r, commit:$s, artifact:("image-"+$v)}' > deploy/releases/production.json
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
           git add deploy/releases/production.json
