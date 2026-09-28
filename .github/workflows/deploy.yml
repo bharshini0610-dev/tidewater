@@ -199,9 +199,9 @@ jobs:
       contents: write   # promote the production pointer + push evidence branch
       actions: read     # download the current production image artifact from its run
     env:
-      REGISTRY: localhost:5050                   # k3d registry, as seen from the runner
-      CLUSTER_REGISTRY: k3d-registry.localhost:5050  # same registry, as seen from the nodes
-      IMAGE_REF: k3d-registry.localhost:5050/settle-api@${{ needs.build.outputs.digest }}
+      REGISTRY: localhost:5050           # runner and nodes use the same reference (k3d mirror)
+      CLUSTER_REGISTRY: localhost:5050
+      IMAGE_REF: localhost:5050/settle-api@${{ needs.build.outputs.digest }}
       EVIDENCE: out/evidence
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -222,6 +222,8 @@ jobs:
       - name: Create local cluster (k3d) with its image registry
         run: |
           k3d cluster create --config local/k3d-cluster.yaml --wait --timeout 180s
+          docker run -d --name settle-registry --network k3d-settle -p 5050:5000 registry:2
+          for _ in $(seq 1 20); do curl -sf http://localhost:5050/v2/ >/dev/null && break; sleep 1; done
           pushed=$(crane push --insecure image/oci "$REGISTRY/settle-api:${RELEASE}")
           echo "pushed $pushed"
           [[ "$pushed" == *"@${{ needs.build.outputs.digest }}" ]] || { echo "digest changed in transit"; exit 1; }

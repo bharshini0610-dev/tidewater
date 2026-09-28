@@ -23,9 +23,12 @@ options:
         nodeFilters: ["server:*", "agent:*"]
       - arg: --kubelet-arg=eviction-hard=nodefs.available<10%,imagefs.available<10%
         nodeFilters: ["server:*", "agent:*"]
-# Local image registry: host pushes to localhost:5050, nodes pull k3d-registry.localhost:5050.
+# Image registry: CI starts `registry:2` as container "settle-registry" on the cluster's
+# docker network, published on localhost:5050. Nodes pull localhost:5050/... through this
+# mirror, so the runner and the cluster use the *same* image reference (and digest).
 registries:
-  create:
-    name: registry.localhost
-    host: "0.0.0.0"
-    hostPort: "5050"
+  config: |
+    mirrors:
+      "localhost:5050":
+        endpoint:
+          - http://settle-registry:5000
