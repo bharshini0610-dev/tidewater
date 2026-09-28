@@ -1,7 +1,10 @@
-fastapi
-uvicorn[standard]
-gunicorn
-sqlalchemy
-psycopg[binary]
-redis
-httpx
+# Pinned so the image is reproducible; bumped by Dependabot (see .github/dependabot.yml).
+fastapi==0.141.1
+uvicorn[standard]==0.54.0
+uvicorn-worker==0.4.0
+gunicorn==26.2.0
+sqlalchemy==2.1.1
+psycopg[binary]==3.3.6
+redis==8.1.0
+httpx==0.28.1
+prometheus-client==0.26.0

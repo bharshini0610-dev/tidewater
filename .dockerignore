@@ -1,0 +1,6 @@
+**
+!app/settle/**
+!app/gunicorn.conf.py
+!app/requirements.txt
+!migrations/**
+**/__pycache__
