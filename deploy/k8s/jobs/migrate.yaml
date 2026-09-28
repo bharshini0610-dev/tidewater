@@ -1,0 +1,36 @@
+# Rendered by the pipeline (scripts/deploy.sh) with the *same* image digest that is about
+# to be rolled out, and run to completion BEFORE the Deployment is updated.
+# Only additive (expand) migrations run here; see migrations/README.md.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: settle-migrate-${RELEASE_ID}
+  labels: {app: settle-migrate}
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 300
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels: {app: settle-migrate}
+    spec:
+      restartPolicy: Never
+      serviceAccountName: settle-migrate
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: migrate
+          image: ${IMAGE}
+          command: ["python", "-m", "settle.migrate"]
+          envFrom:
+            - secretRef: {name: settle-secrets}
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {cpu: 500m, memory: 256Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
