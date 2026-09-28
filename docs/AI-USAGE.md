@@ -21,7 +21,14 @@ GitHub Actions pipeline, the Terraform modules, and the first drafts of every do
 * ECS `deployment_maximum_percent 200` would double connections during deploys; lowered to 150 and added to the budget formula.
 * Shell scripts: `set -e` aborted verification at the first failed curl, so later checks were never reported → verification disables `-e` and always reports every check.
 * Helm `--set` with a JSON log format broke on commas → moved to a values file.
-* *(pipeline iterations — see git history for `fix(ci)` commits)*
+* Found by running the pipeline on GitHub (each is a `fix(...)` commit):
+  GHCR refused the first image push (package linked to the wrong repo) → the image is now carried as a
+  build artifact into an in-cluster registry, digest asserted at every hop; the k3d registry name did not
+  resolve on the nodes → registry mirror; the kustomize base overrode the overlay's image digest;
+  **verification caught a real bug**: the worker crash-looped because an empty `PROMETHEUS_MULTIPROC_DIR`
+  still enabled multiprocess metrics on a read-only filesystem, and the first version of `verify.sh` did not
+  check the worker, so I added end-to-end payout and restart checks; the rollback confirmation raced the
+  terminating pods; the chaos helper pod could not reach toxiproxy, so no latency was injected at first.
 
 **What I reviewed / changed myself:** _<fill in honestly before submitting: what you read line by
 line, what you changed, what you disagree with>_
