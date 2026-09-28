@@ -1,0 +1,14 @@
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "BLE", "S"]
+ignore = ["S101", "S311", "S608", "B008"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S", "B", "BLE", "E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
