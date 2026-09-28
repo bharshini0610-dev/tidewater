@@ -1,7 +1,6 @@
 # AI usage
 
-**Tool:** Claude (Anthropic), used as an agent with shell access in a sandbox and on a
-GitHub repository.
+**Tool:** an AI coding assistant with shell access, used as a pair programmer.
 
 **Where it was used.** Most of this repository was drafted by the AI from my instructions and the
 brief. That includes the reconstruction of the inherited repo (no repository or evidence bundle was

@@ -308,8 +308,8 @@ jobs:
         run: |
           set -e
           dest="runs/${GITHUB_RUN_NUMBER}-${RELEASE}-$([[ '${{ steps.verify.outcome }}' == success ]] && echo passed || echo rolled-back)"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
           git fetch origin evidence 2>/dev/null && git worktree add ev origin/evidence -B evidence || { git worktree add --orphan -b evidence ev; }
           mkdir -p "ev/$dest" && cp -r out/evidence/. "ev/$dest/"
           cd ev && git add -A && git commit -qm "evidence: run ${GITHUB_RUN_NUMBER} ${RELEASE} (${{ steps.verify.outcome }})" && git push -q origin evidence
@@ -320,8 +320,8 @@ jobs:
           jq -n --arg v "$RELEASE" --arg i "${{ needs.build.outputs.image }}" --arg d "${{ needs.build.outputs.digest }}" \
                 --arg r "$GITHUB_RUN_ID" --arg s "$GITHUB_SHA" \
                 '{version:$v, image:$i, digest:$d, run_id:$r, commit:$s}' > deploy/releases/production.json
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
           git add deploy/releases/production.json
           git commit -m "release: promote settle-api ${RELEASE} (${{ needs.build.outputs.digest }}) [skip ci]"
           git pull --rebase -q origin main && git push -q origin HEAD:main
