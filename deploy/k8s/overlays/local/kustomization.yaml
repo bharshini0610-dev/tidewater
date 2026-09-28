@@ -17,3 +17,6 @@ images:
   - name: settle-api
     newName: ghcr.io/example/settle-api
     newTag: set-by-pipeline
+  - name: settle-mockbank
+    newName: ghcr.io/example/settle-api
+    newTag: set-by-pipeline

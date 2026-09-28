@@ -18,7 +18,7 @@ spec:
       securityContext: {runAsNonRoot: true, runAsUser: 10001, seccompProfile: {type: RuntimeDefault}}
       containers:
         - name: mockbank
-          image: settle-api
+          image: settle-mockbank
           command: ["uvicorn", "settle.mockbank:app", "--host", "0.0.0.0", "--port", "8080", "--no-access-log"]
           env:
             - {name: BANK_FAIL_RATE, value: "0.05"}   # exercise the retry path

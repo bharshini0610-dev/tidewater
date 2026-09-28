@@ -29,7 +29,7 @@ spec:
       securityContext: {runAsNonRoot: true, runAsUser: 65534, seccompProfile: {type: RuntimeDefault}}
       containers:
         - name: toxiproxy
-          image: ghcr.io/shopify/toxiproxy:2.9.0
+          image: ghcr.io/shopify/toxiproxy:2.12.0
           args: ["-host=0.0.0.0", "-config=/config/toxiproxy.json"]
           ports: [{containerPort: 5432}, {containerPort: 8474}]
           resources:

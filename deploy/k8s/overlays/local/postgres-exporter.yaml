@@ -18,7 +18,7 @@ spec:
       securityContext: {runAsNonRoot: true, runAsUser: 65534, seccompProfile: {type: RuntimeDefault}}
       containers:
         - name: exporter
-          image: quay.io/prometheuscommunity/postgres-exporter:v0.15.0
+          image: quay.io/prometheuscommunity/postgres-exporter:v0.20.1
           env:
             - {name: DATA_SOURCE_URI, value: "postgres:5432/settle?sslmode=disable"}
             - {name: DATA_SOURCE_USER, valueFrom: {secretKeyRef: {name: postgres-auth, key: username}}}
