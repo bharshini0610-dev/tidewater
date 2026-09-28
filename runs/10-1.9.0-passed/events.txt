@@ -1,0 +1,133 @@
+LAST SEEN   TYPE      REASON                         OBJECT                                      MESSAGE
+16m         Normal    Scheduled                      pod/postgres-exporter-84fc64858b-zwhvr      Successfully assigned settle/postgres-exporter-84fc64858b-zwhvr to k3d-settle-agent-0
+16m         Normal    Scheduled                      pod/settle-api-cbf476d64-b69gq              Successfully assigned settle/settle-api-cbf476d64-b69gq to k3d-settle-server-0
+16m         Normal    Scheduled                      pod/redis-cb8f6c4df-p4d8m                   Successfully assigned settle/redis-cb8f6c4df-p4d8m to k3d-settle-agent-0
+16m         Normal    Scheduled                      pod/settle-migrate-1-9-0-1790580576-jmxq6   Successfully assigned settle/settle-migrate-1-9-0-1790580576-jmxq6 to k3d-settle-server-0
+15m         Normal    Scheduled                      pod/settle-migrate-1-9-0-1790580674-pzmhf   Successfully assigned settle/settle-migrate-1-9-0-1790580674-pzmhf to k3d-settle-server-0
+93s         Normal    Scheduled                      pod/chaos-1790581491                        Successfully assigned settle/chaos-1790581491 to k3d-settle-server-0
+14m         Normal    Scheduled                      pod/settle-worker-7bb6d87577-s7dtn          Successfully assigned settle/settle-worker-7bb6d87577-s7dtn to k3d-settle-server-0
+14m         Normal    Scheduled                      pod/settle-api-c76994497-8wr7x              Successfully assigned settle/settle-api-c76994497-8wr7x to k3d-settle-agent-0
+16m         Normal    Scheduled                      pod/toxiproxy-76477bc764-fgbdr              Successfully assigned settle/toxiproxy-76477bc764-fgbdr to k3d-settle-agent-0
+14m         Normal    Scheduled                      pod/settle-api-c76994497-p5b7q              Successfully assigned settle/settle-api-c76994497-p5b7q to k3d-settle-server-0
+14m         Normal    Scheduled                      pod/settle-worker-7bb6d87577-t9l78          Successfully assigned settle/settle-worker-7bb6d87577-t9l78 to k3d-settle-agent-0
+16m         Normal    Scheduled                      pod/postgres-0                              Successfully assigned settle/postgres-0 to k3d-settle-agent-0
+12m         Normal    Scheduled                      pod/chaos-1790580852                        Successfully assigned settle/chaos-1790580852 to k3d-settle-server-0
+16m         Normal    Scheduled                      pod/mockbank-6dd94d9c85-f86d8               Successfully assigned settle/mockbank-6dd94d9c85-f86d8 to k3d-settle-agent-0
+16m         Normal    Scheduled                      pod/settle-worker-844bc6b7d6-m7sjg          Successfully assigned settle/settle-worker-844bc6b7d6-m7sjg to k3d-settle-agent-0
+16m         Normal    Scheduled                      pod/settle-api-cbf476d64-c8jng              Successfully assigned settle/settle-api-cbf476d64-c8jng to k3d-settle-agent-0
+16m         Normal    Scheduled                      pod/settle-worker-844bc6b7d6-lfhnc          Successfully assigned settle/settle-worker-844bc6b7d6-lfhnc to k3d-settle-server-0
+16m         Normal    SuccessfulCreate               replicaset/mockbank-6dd94d9c85              Created pod: mockbank-6dd94d9c85-f86d8
+16m         Normal    Pulling                        pod/postgres-exporter-84fc64858b-zwhvr      Pulling image "quay.io/prometheuscommunity/postgres-exporter:v0.20.1"
+16m         Normal    Pulling                        pod/mockbank-6dd94d9c85-f86d8               Pulling image "localhost:5050/settle-api@sha256:bfad217ad00142abc6e6ba2ae6a085efe6ef17468580762c54784dc39672b714"
+16m         Normal    WaitForFirstConsumer           persistentvolumeclaim/data-postgres-0       waiting for first consumer to be created before binding
+16m         Normal    Provisioning                   persistentvolumeclaim/data-postgres-0       External provisioner is provisioning volume for claim "settle/data-postgres-0"
+16m         Normal    ScalingReplicaSet              deployment/mockbank                         Scaled up replica set mockbank-6dd94d9c85 from 0 to 1
+16m         Normal    NoPods                         poddisruptionbudget/settle-worker           No matching pods found
+16m         Normal    Pulling                        pod/toxiproxy-76477bc764-fgbdr              Pulling image "ghcr.io/shopify/toxiproxy:2.12.0"
+16m         Normal    ScalingReplicaSet              deployment/redis                            Scaled up replica set redis-cb8f6c4df from 0 to 1
+16m         Normal    SuccessfulCreate               replicaset/redis-cb8f6c4df                  Created pod: redis-cb8f6c4df-p4d8m
+16m         Normal    NoPods                         poddisruptionbudget/settle-api              No matching pods found
+16m         Normal    ScalingReplicaSet              deployment/toxiproxy                        Scaled up replica set toxiproxy-76477bc764 from 0 to 1
+16m         Normal    Pulling                        pod/redis-cb8f6c4df-p4d8m                   Pulling image "redis:7-alpine"
+16m         Normal    SuccessfulCreate               replicaset/toxiproxy-76477bc764             Created pod: toxiproxy-76477bc764-fgbdr
+16m         Normal    SuccessfulCreate               statefulset/postgres                        Create Pod postgres-0 in StatefulSet postgres successful
+16m         Normal    SuccessfulCreate               replicaset/postgres-exporter-84fc64858b     Created pod: postgres-exporter-84fc64858b-zwhvr
+16m         Normal    ScalingReplicaSet              deployment/postgres-exporter                Scaled up replica set postgres-exporter-84fc64858b from 0 to 1
+16m         Normal    SuccessfulCreate               statefulset/postgres                        Create Claim data-postgres-0 Pod postgres-0 in StatefulSet postgres success
+16m         Normal    Started                        pod/postgres-exporter-84fc64858b-zwhvr      Container started
+16m         Normal    Created                        pod/postgres-exporter-84fc64858b-zwhvr      Container created
+16m         Normal    Pulled                         pod/postgres-exporter-84fc64858b-zwhvr      Successfully pulled image "quay.io/prometheuscommunity/postgres-exporter:v0.20.1" in 1.887s (1.887s including waiting). Image size: 11784792 bytes.
+16m         Normal    Pulled                         pod/redis-cb8f6c4df-p4d8m                   Successfully pulled image "redis:7-alpine" in 2.568s (2.568s including waiting). Image size: 16260342 bytes.
+16m         Normal    Created                        pod/toxiproxy-76477bc764-fgbdr              Container created
+16m         Normal    Started                        pod/redis-cb8f6c4df-p4d8m                   Container started
+16m         Normal    Started                        pod/toxiproxy-76477bc764-fgbdr              Container started
+16m         Normal    Created                        pod/redis-cb8f6c4df-p4d8m                   Container created
+16m         Normal    Pulled                         pod/toxiproxy-76477bc764-fgbdr              Successfully pulled image "ghcr.io/shopify/toxiproxy:2.12.0" in 2.65s (2.65s including waiting). Image size: 7554727 bytes.
+16m         Warning   Unhealthy                      pod/mockbank-6dd94d9c85-f86d8               Readiness probe failed: Get "http://10.42.0.9:8080/livez": dial tcp 10.42.0.9:8080: connect: connection refused
+16m         Normal    Started                        pod/mockbank-6dd94d9c85-f86d8               Container started
+16m         Normal    Created                        pod/mockbank-6dd94d9c85-f86d8               Container created
+16m         Normal    Pulled                         pod/mockbank-6dd94d9c85-f86d8               Successfully pulled image "localhost:5050/settle-api@sha256:bfad217ad00142abc6e6ba2ae6a085efe6ef17468580762c54784dc39672b714" in 3.625s (3.625s including waiting). Image size: 82143639 bytes.
+16m         Normal    ProvisioningSucceeded          persistentvolumeclaim/data-postgres-0       Successfully provisioned volume pvc-2739f560-17db-462b-835a-3e413587f830
+16m         Normal    ExternalProvisioning           persistentvolumeclaim/data-postgres-0       Waiting for a volume to be created either by the external provisioner 'rancher.io/local-path' or manually by the system administrator. If volume creation is delayed, please verify that the provisioner is running and correctly registered.
+16m         Normal    Pulling                        pod/postgres-0                              Pulling image "postgres:15-alpine"
+16m         Normal    Created                        pod/postgres-0                              Container created
+16m         Warning   Unhealthy                      pod/postgres-0                              Readiness probe failed: /var/run/postgresql:5432 - no response
+16m         Normal    Started                        pod/postgres-0                              Container started
+16m         Normal    Pulled                         pod/postgres-0                              Successfully pulled image "postgres:15-alpine" in 3.514s (3.514s including waiting). Image size: 115261681 bytes.
+16m         Normal    Pulling                        pod/settle-migrate-1-9-0-1790580576-jmxq6   Pulling image "localhost:5050/settle-api@sha256:bfad217ad00142abc6e6ba2ae6a085efe6ef17468580762c54784dc39672b714"
+16m         Normal    SuccessfulCreate               job/settle-migrate-1-9-0-1790580576         Created pod: settle-migrate-1-9-0-1790580576-jmxq6
+16m         Normal    Created                        pod/settle-migrate-1-9-0-1790580576-jmxq6   Container created
+16m         Normal    Started                        pod/settle-migrate-1-9-0-1790580576-jmxq6   Container started
+16m         Normal    Pulled                         pod/settle-migrate-1-9-0-1790580576-jmxq6   Successfully pulled image "localhost:5050/settle-api@sha256:bfad217ad00142abc6e6ba2ae6a085efe6ef17468580762c54784dc39672b714" in 2.583s (2.583s including waiting). Image size: 82143639 bytes.
+16m         Normal    ScalingReplicaSet              deployment/settle-api                       Scaled up replica set settle-api-cbf476d64 from 0 to 2
+16m         Normal    Completed                      job/settle-migrate-1-9-0-1790580576         Job completed
+16m         Normal    SuccessfulCreate               replicaset/settle-api-cbf476d64             Created pod: settle-api-cbf476d64-b69gq
+16m         Normal    SuccessfulCreate               replicaset/settle-worker-844bc6b7d6         Created pod: settle-worker-844bc6b7d6-lfhnc
+16m         Normal    SuccessfulCreate               replicaset/settle-api-cbf476d64             Created pod: settle-api-cbf476d64-c8jng
+16m         Normal    SuccessfulCreate               replicaset/settle-worker-844bc6b7d6         Created pod: settle-worker-844bc6b7d6-m7sjg
+16m         Normal    ScalingReplicaSet              deployment/settle-worker                    Scaled up replica set settle-worker-844bc6b7d6 from 0 to 2
+16m         Normal    Started                        pod/settle-worker-844bc6b7d6-m7sjg          Container started
+16m         Normal    Started                        pod/settle-api-cbf476d64-c8jng              Container started
+16m         Normal    Created                        pod/settle-api-cbf476d64-c8jng              Container created
+16m         Normal    Pulled                         pod/settle-api-cbf476d64-c8jng              Container image "localhost:5050/settle-api@sha256:bfad217ad00142abc6e6ba2ae6a085efe6ef17468580762c54784dc39672b714" already present on machine and can be accessed by the pod
+16m         Normal    Pulled                         pod/settle-worker-844bc6b7d6-lfhnc          Container image "localhost:5050/settle-api@sha256:bfad217ad00142abc6e6ba2ae6a085efe6ef17468580762c54784dc39672b714" already present on machine and can be accessed by the pod
+16m         Normal    Started                        pod/settle-api-cbf476d64-b69gq              Container started
+16m         Normal    Created                        pod/settle-api-cbf476d64-b69gq              Container created
+16m         Normal    Pulled                         pod/settle-api-cbf476d64-b69gq              Container image "localhost:5050/settle-api@sha256:bfad217ad00142abc6e6ba2ae6a085efe6ef17468580762c54784dc39672b714" already present on machine and can be accessed by the pod
+16m         Normal    Created                        pod/settle-worker-844bc6b7d6-lfhnc          Container created
+16m         Normal    Started                        pod/settle-worker-844bc6b7d6-lfhnc          Container started
+16m         Normal    Pulled                         pod/settle-worker-844bc6b7d6-m7sjg          Container image "localhost:5050/settle-api@sha256:bfad217ad00142abc6e6ba2ae6a085efe6ef17468580762c54784dc39672b714" already present on machine and can be accessed by the pod
+16m         Normal    Created                        pod/settle-worker-844bc6b7d6-m7sjg          Container created
+16m         Warning   Unhealthy                      pod/settle-api-cbf476d64-c8jng              Startup probe failed: Get "http://10.42.0.15:8000/livez": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+16m         Warning   Unhealthy                      pod/settle-api-cbf476d64-b69gq              Startup probe failed: Get "http://10.42.1.11:8000/livez": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+16m         Warning   FailedComputeMetricsReplicas   horizontalpodautoscaler/settle-api          invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+16m         Warning   FailedGetResourceMetric        horizontalpodautoscaler/settle-api          failed to get cpu utilization: did not receive metrics for targeted pods (pods might be unready)
+16m         Normal    Sync                           ingress/settle                              Scheduled for sync
+15m         Normal    SuccessfulCreate               job/settle-migrate-1-9-0-1790580674         Created pod: settle-migrate-1-9-0-1790580674-pzmhf
+15m         Normal    Pulling                        pod/settle-migrate-1-9-0-1790580674-pzmhf   Pulling image "localhost:5050/settle-api@sha256:2bcd20d8995d5d622e7a5576765cbaba5031da5c85bfda93f7f849668e8822d9"
+15m         Normal    Pulled                         pod/settle-migrate-1-9-0-1790580674-pzmhf   Successfully pulled image "localhost:5050/settle-api@sha256:2bcd20d8995d5d622e7a5576765cbaba5031da5c85bfda93f7f849668e8822d9" in 1.21s (1.21s including waiting). Image size: 82143678 bytes.
+15m         Normal    Created                        pod/settle-migrate-1-9-0-1790580674-pzmhf   Container created
+15m         Normal    Started                        pod/settle-migrate-1-9-0-1790580674-pzmhf   Container started
+15m         Normal    ScalingReplicaSet              deployment/settle-api                       Scaled up replica set settle-api-c76994497 from 0 to 1
+15m         Normal    Completed                      job/settle-migrate-1-9-0-1790580674         Job completed
+15m         Normal    SuccessfulCreate               replicaset/settle-api-c76994497             Created pod: settle-api-c76994497-p5b7q
+15m         Normal    ScalingReplicaSet              deployment/settle-worker                    Scaled up replica set settle-worker-7bb6d87577 from 0 to 1
+15m         Normal    SuccessfulCreate               replicaset/settle-worker-7bb6d87577         Created pod: settle-worker-7bb6d87577-t9l78
+14m         Normal    Pulled                         pod/settle-api-c76994497-p5b7q              Container image "localhost:5050/settle-api@sha256:2bcd20d8995d5d622e7a5576765cbaba5031da5c85bfda93f7f849668e8822d9" already present on machine and can be accessed by the pod
+14m         Normal    Created                        pod/settle-api-c76994497-p5b7q              Container created
+14m         Normal    Started                        pod/settle-api-c76994497-p5b7q              Container started
+14m         Normal    Pulling                        pod/settle-worker-7bb6d87577-t9l78          Pulling image "localhost:5050/settle-api@sha256:2bcd20d8995d5d622e7a5576765cbaba5031da5c85bfda93f7f849668e8822d9"
+14m         Normal    Created                        pod/settle-worker-7bb6d87577-t9l78          Container created
+14m         Normal    Pulled                         pod/settle-worker-7bb6d87577-t9l78          Successfully pulled image "localhost:5050/settle-api@sha256:2bcd20d8995d5d622e7a5576765cbaba5031da5c85bfda93f7f849668e8822d9" in 1.485s (1.485s including waiting). Image size: 82143678 bytes.
+14m         Normal    Pulled                         pod/settle-worker-7bb6d87577-s7dtn          Container image "localhost:5050/settle-api@sha256:2bcd20d8995d5d622e7a5576765cbaba5031da5c85bfda93f7f849668e8822d9" already present on machine and can be accessed by the pod
+14m         Normal    ScalingReplicaSet              deployment/settle-worker                    Scaled up replica set settle-worker-7bb6d87577 from 1 to 2
+14m         Normal    ScalingReplicaSet              deployment/settle-worker                    Scaled down replica set settle-worker-844bc6b7d6 from 1 to 0
+14m         Normal    SuccessfulCreate               replicaset/settle-worker-7bb6d87577         Created pod: settle-worker-7bb6d87577-s7dtn
+14m         Normal    Started                        pod/settle-worker-7bb6d87577-t9l78          Container started
+14m         Normal    Started                        pod/settle-worker-7bb6d87577-s7dtn          Container started
+14m         Normal    ScalingReplicaSet              deployment/settle-worker                    Scaled down replica set settle-worker-844bc6b7d6 from 2 to 1
+14m         Normal    Created                        pod/settle-worker-7bb6d87577-s7dtn          Container created
+14m         Normal    Killing                        pod/settle-worker-844bc6b7d6-lfhnc          Stopping container worker
+14m         Normal    SuccessfulDelete               replicaset/settle-worker-844bc6b7d6         Deleted pod: settle-worker-844bc6b7d6-lfhnc
+14m         Normal    SuccessfulDelete               replicaset/settle-worker-844bc6b7d6         Deleted pod: settle-worker-844bc6b7d6-m7sjg
+14m         Normal    Killing                        pod/settle-worker-844bc6b7d6-m7sjg          Stopping container worker
+14m         Warning   Unhealthy                      pod/settle-api-c76994497-p5b7q              Startup probe failed: Get "http://10.42.1.14:8000/livez": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+14m         Normal    Killing                        pod/settle-api-cbf476d64-b69gq              Stopping container api
+14m         Normal    SuccessfulCreate               replicaset/settle-api-c76994497             Created pod: settle-api-c76994497-8wr7x
+14m         Normal    Started                        pod/settle-api-c76994497-8wr7x              Container started
+14m         Normal    ScalingReplicaSet              deployment/settle-api                       Scaled up replica set settle-api-c76994497 from 1 to 2
+14m         Normal    SuccessfulDelete               replicaset/settle-api-cbf476d64             Deleted pod: settle-api-cbf476d64-b69gq
+14m         Normal    Created                        pod/settle-api-c76994497-8wr7x              Container created
+14m         Normal    Pulled                         pod/settle-api-c76994497-8wr7x              Container image "localhost:5050/settle-api@sha256:2bcd20d8995d5d622e7a5576765cbaba5031da5c85bfda93f7f849668e8822d9" already present on machine and can be accessed by the pod
+14m         Normal    ScalingReplicaSet              deployment/settle-api                       Scaled down replica set settle-api-cbf476d64 from 2 to 1
+14m         Warning   Unhealthy                      pod/settle-api-c76994497-8wr7x              Startup probe failed: Get "http://10.42.0.18:8000/livez": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+14m         Normal    Killing                        pod/settle-api-cbf476d64-c8jng              Stopping container api
+14m         Normal    ScalingReplicaSet              deployment/settle-api                       Scaled down replica set settle-api-cbf476d64 from 1 to 0
+14m         Normal    SuccessfulDelete               replicaset/settle-api-cbf476d64             Deleted pod: settle-api-cbf476d64-c8jng
+12m         Normal    Pulling                        pod/chaos-1790580852                        Pulling image "curlimages/curl:8.10.1"
+12m         Normal    Started                        pod/chaos-1790580852                        Container started
+12m         Normal    Created                        pod/chaos-1790580852                        Container created
+12m         Normal    Pulled                         pod/chaos-1790580852                        Successfully pulled image "curlimages/curl:8.10.1" in 1.582s (1.582s including waiting). Image size: 9414401 bytes.
+93s         Normal    Started                        pod/chaos-1790581491                        Container started
+93s         Normal    Created                        pod/chaos-1790581491                        Container created
+93s         Normal    Pulled                         pod/chaos-1790581491                        Container image "curlimages/curl:8.10.1" already present on machine and can be accessed by the pod

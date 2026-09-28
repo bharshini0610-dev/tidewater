@@ -1,0 +1,80 @@
+Warning: would violate PodSecurity "restricted:latest": allowPrivilegeEscalation != false (container "chaos-1790580852" must set securityContext.allowPrivilegeEscalation=false), unrestricted capabilities (container "chaos-1790580852" must set securityContext.capabilities.drop=["ALL"])
+curl: (7) Failed to connect to pg-proxy port 8474 after 1 ms: Could not connect to server
+All commands and output from this session will be recorded in container logs, including credentials and sensitive information passed through the command prompt.
+If you don't see a command prompt, try pressing enter.
+warning: couldn't attach to pod/chaos-1790580852, falling back to streaming logs: Internal error occurred: Internal error occurred: error attaching to container: failed to load task: no running task found: task ed33ae41c735a14170722b93108e7058ac227eb206554b7f5223937eeee419f7 not found
+curl: (7) Failed to connect to pg-proxy port 8474 after 1 ms: Could not connect to server
+pod "chaos-1790580852" deleted from settle namespace
+pod settle/chaos-1790580852 terminated (Error)
+[07:34:18Z] chaos-db on 3000ms
+[07:34:18Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:34:28Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:34:38Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:34:48Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:34:58Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:35:09Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:35:19Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:35:29Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:35:39Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:35:50Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:36:00Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:36:10Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:36:20Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:36:31Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:36:41Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:36:51Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:37:01Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:37:11Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:37:21Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:37:31Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:37:42Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:37:52Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:38:02Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:38:12Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:38:22Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:38:33Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:38:43Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:38:54Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:39:04Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:39:14Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:39:24Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:39:34Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:39:45Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:39:55Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:40:05Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:40:15Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:40:25Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:40:35Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:40:46Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:40:56Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:41:06Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:41:16Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:41:26Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:41:36Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:41:46Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:41:57Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:42:07Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:42:17Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:42:27Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:42:37Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:42:48Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:42:58Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:43:08Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:43:19Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:43:29Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:43:39Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:43:49Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:43:59Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:44:09Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[07:44:20Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+screenshots written to out/evidence
+Warning: would violate PodSecurity "restricted:latest": allowPrivilegeEscalation != false (container "chaos-1790581491" must set securityContext.allowPrivilegeEscalation=false), unrestricted capabilities (container "chaos-1790581491" must set securityContext.capabilities.drop=["ALL"])
+curl: (7) Failed to connect to pg-proxy port 8474 after 1 ms: Could not connect to server
+All commands and output from this session will be recorded in container logs, including credentials and sensitive information passed through the command prompt.
+If you don't see a command prompt, try pressing enter.
+warning: couldn't attach to pod/chaos-1790581491, falling back to streaming logs: unable to upgrade connection: container chaos-1790581491 not found in pod chaos-1790581491_settle
+curl: (7) Failed to connect to pg-proxy port 8474 after 1 ms: Could not connect to server
+pod "chaos-1790581491" deleted from settle namespace
+pod settle/chaos-1790581491 terminated (Error)
+[07:44:54Z] chaos-db off 3000ms
+[07:46:24Z] alert SettleApiErrorBudgetBurn state=inactive after 612s; restarts 0 -> 0
