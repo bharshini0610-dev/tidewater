@@ -1,0 +1,114 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: settle-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: '1'
+data:
+  settle-overview.json: "{\n \"title\": \"settle \\u2014 service overview\",\n \"\
+    uid\": \"settle-overview\",\n \"schemaVersion\": 39,\n \"time\": {\n  \"from\"\
+    : \"now-30m\",\n  \"to\": \"now\"\n },\n \"refresh\": \"10s\",\n \"panels\": [\n\
+    \  {\n   \"type\": \"stat\",\n   \"title\": \"SLO-1 good ratio (5m)\",\n   \"\
+    gridPos\": {\n    \"x\": 0,\n    \"y\": 0,\n    \"w\": 6,\n    \"h\": 4\n   },\n\
+    \   \"datasource\": {\n    \"type\": \"prometheus\",\n    \"uid\": \"prometheus\"\
+    \n   },\n   \"fieldConfig\": {\n    \"defaults\": {\n     \"unit\": \"percentunit\"\
+    ,\n     \"thresholds\": {\n      \"mode\": \"absolute\",\n      \"steps\": [\n\
+    \       {\n        \"color\": \"red\",\n        \"value\": null\n       },\n \
+    \      {\n        \"color\": \"green\",\n        \"value\": 0.995\n       }\n\
+    \      ]\n     }\n    }\n   },\n   \"targets\": [\n    {\n     \"expr\": \"1 -\
+    \ settle:slo_error_ratio:rate5m\",\n     \"refId\": \"A\"\n    }\n   ]\n  },\n\
+    \  {\n   \"type\": \"stat\",\n   \"title\": \"Duplicate payouts (24h)\",\n   \"\
+    gridPos\": {\n    \"x\": 6,\n    \"y\": 0,\n    \"w\": 6,\n    \"h\": 4\n   },\n\
+    \   \"datasource\": {\n    \"type\": \"prometheus\",\n    \"uid\": \"prometheus\"\
+    \n   },\n   \"fieldConfig\": {\n    \"defaults\": {\n     \"unit\": \"short\"\
+    ,\n     \"thresholds\": {\n      \"mode\": \"absolute\",\n      \"steps\": [\n\
+    \       {\n        \"color\": \"green\",\n        \"value\": null\n       },\n\
+    \       {\n        \"color\": \"red\",\n        \"value\": 1\n       }\n     \
+    \ ]\n     }\n    }\n   },\n   \"targets\": [\n    {\n     \"expr\": \"max(settle_duplicate_payouts)\"\
+    ,\n     \"refId\": \"A\"\n    }\n   ]\n  },\n  {\n   \"type\": \"stat\",\n   \"\
+    title\": \"Oldest job age\",\n   \"gridPos\": {\n    \"x\": 12,\n    \"y\": 0,\n\
+    \    \"w\": 6,\n    \"h\": 4\n   },\n   \"datasource\": {\n    \"type\": \"prometheus\"\
+    ,\n    \"uid\": \"prometheus\"\n   },\n   \"fieldConfig\": {\n    \"defaults\"\
+    : {\n     \"unit\": \"s\",\n     \"thresholds\": {\n      \"mode\": \"absolute\"\
+    ,\n      \"steps\": [\n       {\n        \"color\": \"green\",\n        \"value\"\
+    : null\n       },\n       {\n        \"color\": \"red\",\n        \"value\": 900\n\
+    \       }\n      ]\n     }\n    }\n   },\n   \"targets\": [\n    {\n     \"expr\"\
+    : \"max(settle_queue_oldest_job_age_seconds)\",\n     \"refId\": \"A\"\n    }\n\
+    \   ]\n  },\n  {\n   \"type\": \"stat\",\n   \"title\": \"Postgres connections\
+    \ used\",\n   \"gridPos\": {\n    \"x\": 18,\n    \"y\": 0,\n    \"w\": 6,\n \
+    \   \"h\": 4\n   },\n   \"datasource\": {\n    \"type\": \"prometheus\",\n   \
+    \ \"uid\": \"prometheus\"\n   },\n   \"fieldConfig\": {\n    \"defaults\": {\n\
+    \     \"unit\": \"percentunit\",\n     \"thresholds\": {\n      \"mode\": \"absolute\"\
+    ,\n      \"steps\": [\n       {\n        \"color\": \"green\",\n        \"value\"\
+    : null\n       },\n       {\n        \"color\": \"orange\",\n        \"value\"\
+    : 0.6\n       },\n       {\n        \"color\": \"red\",\n        \"value\": 0.8\n\
+    \       }\n      ]\n     }\n    }\n   },\n   \"targets\": [\n    {\n     \"expr\"\
+    : \"sum(pg_stat_activity_count) / max(pg_settings_max_connections)\",\n     \"\
+    refId\": \"A\"\n    }\n   ]\n  },\n  {\n   \"type\": \"timeseries\",\n   \"title\"\
+    : \"API requests by status\",\n   \"gridPos\": {\n    \"x\": 0,\n    \"y\": 4,\n\
+    \    \"w\": 12,\n    \"h\": 8\n   },\n   \"datasource\": {\n    \"type\": \"prometheus\"\
+    ,\n    \"uid\": \"prometheus\"\n   },\n   \"fieldConfig\": {\n    \"defaults\"\
+    : {\n     \"unit\": \"reqps\"\n    },\n    \"overrides\": []\n   },\n   \"targets\"\
+    : [\n    {\n     \"expr\": \"sum by (status) (rate(settle_http_requests_total[1m]))\"\
+    ,\n     \"legendFormat\": \"{{status}}\",\n     \"refId\": \"A\"\n    }\n   ]\n\
+    \  },\n  {\n   \"type\": \"timeseries\",\n   \"title\": \"API latency p50 / p99\
+    \ (excl. reports)\",\n   \"gridPos\": {\n    \"x\": 12,\n    \"y\": 4,\n    \"\
+    w\": 12,\n    \"h\": 8\n   },\n   \"datasource\": {\n    \"type\": \"prometheus\"\
+    ,\n    \"uid\": \"prometheus\"\n   },\n   \"fieldConfig\": {\n    \"defaults\"\
+    : {\n     \"unit\": \"s\"\n    },\n    \"overrides\": []\n   },\n   \"targets\"\
+    : [\n    {\n     \"expr\": \"histogram_quantile(0.5, sum by (le) (rate(settle_http_request_duration_seconds_bucket{route!=\\\
+    \"/reports/daily\\\"}[2m])))\",\n     \"legendFormat\": \"p50\",\n     \"refId\"\
+    : \"A\"\n    },\n    {\n     \"expr\": \"histogram_quantile(0.99, sum by (le)\
+    \ (rate(settle_http_request_duration_seconds_bucket{route!=\\\"/reports/daily\\\
+    \"}[2m])))\",\n     \"legendFormat\": \"p99\",\n     \"refId\": \"B\"\n    }\n\
+    \   ]\n  },\n  {\n   \"type\": \"timeseries\",\n   \"title\": \"SLO-1 error ratio\
+    \ vs fast-burn threshold\",\n   \"gridPos\": {\n    \"x\": 0,\n    \"y\": 12,\n\
+    \    \"w\": 12,\n    \"h\": 8\n   },\n   \"datasource\": {\n    \"type\": \"prometheus\"\
+    ,\n    \"uid\": \"prometheus\"\n   },\n   \"fieldConfig\": {\n    \"defaults\"\
+    : {\n     \"unit\": \"percentunit\"\n    },\n    \"overrides\": []\n   },\n  \
+    \ \"targets\": [\n    {\n     \"expr\": \"settle:slo_error_ratio:rate5m\",\n \
+    \    \"legendFormat\": \"5m\",\n     \"refId\": \"A\"\n    },\n    {\n     \"\
+    expr\": \"settle:slo_error_ratio:rate1h\",\n     \"legendFormat\": \"1h\",\n \
+    \    \"refId\": \"B\"\n    },\n    {\n     \"expr\": \"vector(0.072)\",\n    \
+    \ \"legendFormat\": \"14.4x burn threshold\",\n     \"refId\": \"C\"\n    }\n\
+    \   ]\n  },\n  {\n   \"type\": \"timeseries\",\n   \"title\": \"DB connections:\
+    \ app pools vs Postgres\",\n   \"gridPos\": {\n    \"x\": 12,\n    \"y\": 12,\n\
+    \    \"w\": 12,\n    \"h\": 8\n   },\n   \"datasource\": {\n    \"type\": \"prometheus\"\
+    ,\n    \"uid\": \"prometheus\"\n   },\n   \"fieldConfig\": {\n    \"defaults\"\
+    : {\n     \"unit\": \"short\"\n    },\n    \"overrides\": []\n   },\n   \"targets\"\
+    : [\n    {\n     \"expr\": \"sum(settle_db_pool_checked_out)\",\n     \"legendFormat\"\
+    : \"app pools checked out\",\n     \"refId\": \"A\"\n    },\n    {\n     \"expr\"\
+    : \"sum(pg_stat_activity_count)\",\n     \"legendFormat\": \"postgres backends\"\
+    ,\n     \"refId\": \"B\"\n    },\n    {\n     \"expr\": \"max(pg_settings_max_connections)\"\
+    ,\n     \"legendFormat\": \"max_connections\",\n     \"refId\": \"C\"\n    }\n\
+    \   ]\n  },\n  {\n   \"type\": \"timeseries\",\n   \"title\": \"Queue depth and\
+    \ in-flight\",\n   \"gridPos\": {\n    \"x\": 0,\n    \"y\": 20,\n    \"w\": 12,\n\
+    \    \"h\": 8\n   },\n   \"datasource\": {\n    \"type\": \"prometheus\",\n  \
+    \  \"uid\": \"prometheus\"\n   },\n   \"fieldConfig\": {\n    \"defaults\": {\n\
+    \     \"unit\": \"short\"\n    },\n    \"overrides\": []\n   },\n   \"targets\"\
+    : [\n    {\n     \"expr\": \"max(settle_queue_depth)\",\n     \"legendFormat\"\
+    : \"queued\",\n     \"refId\": \"A\"\n    },\n    {\n     \"expr\": \"sum(settle_jobs_in_flight)\"\
+    ,\n     \"legendFormat\": \"in flight\",\n     \"refId\": \"B\"\n    }\n   ]\n\
+    \  },\n  {\n   \"type\": \"timeseries\",\n   \"title\": \"Jobs by outcome\",\n\
+    \   \"gridPos\": {\n    \"x\": 12,\n    \"y\": 20,\n    \"w\": 12,\n    \"h\"\
+    : 8\n   },\n   \"datasource\": {\n    \"type\": \"prometheus\",\n    \"uid\":\
+    \ \"prometheus\"\n   },\n   \"fieldConfig\": {\n    \"defaults\": {\n     \"unit\"\
+    : \"ops\"\n    },\n    \"overrides\": []\n   },\n   \"targets\": [\n    {\n  \
+    \   \"expr\": \"sum by (outcome) (rate(settle_jobs_total[5m]))\",\n     \"legendFormat\"\
+    : \"{{outcome}}\",\n     \"refId\": \"A\"\n    }\n   ]\n  },\n  {\n   \"type\"\
+    : \"timeseries\",\n   \"title\": \"Pod restarts (10m)\",\n   \"gridPos\": {\n\
+    \    \"x\": 0,\n    \"y\": 28,\n    \"w\": 12,\n    \"h\": 8\n   },\n   \"datasource\"\
+    : {\n    \"type\": \"prometheus\",\n    \"uid\": \"prometheus\"\n   },\n   \"\
+    fieldConfig\": {\n    \"defaults\": {\n     \"unit\": \"short\"\n    },\n    \"\
+    overrides\": []\n   },\n   \"targets\": [\n    {\n     \"expr\": \"sum by (pod)\
+    \ (increase(kube_pod_container_status_restarts_total{namespace=\\\"settle\\\"\
+    }[10m]))\",\n     \"legendFormat\": \"{{pod}}\",\n     \"refId\": \"A\"\n    }\n\
+    \   ]\n  },\n  {\n   \"type\": \"timeseries\",\n   \"title\": \"503s from DB fail-fast\"\
+    ,\n   \"gridPos\": {\n    \"x\": 12,\n    \"y\": 28,\n    \"w\": 12,\n    \"h\"\
+    : 8\n   },\n   \"datasource\": {\n    \"type\": \"prometheus\",\n    \"uid\":\
+    \ \"prometheus\"\n   },\n   \"fieldConfig\": {\n    \"defaults\": {\n     \"unit\"\
+    : \"reqps\"\n    },\n    \"overrides\": []\n   },\n   \"targets\": [\n    {\n\
+    \     \"expr\": \"sum(rate(settle_db_unavailable_total[1m]))\",\n     \"legendFormat\"\
+    : \"db unavailable\",\n     \"refId\": \"A\"\n    }\n   ]\n  }\n ],\n \"tags\"\
+    : [\n  \"settle\"\n ]\n}"

@@ -1,0 +1,32 @@
+# pod_template_hash is kept as a label so post-deploy verification can judge *only* the
+# new ReplicaSet's traffic.
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata: {name: settle-api, namespace: settle}
+spec:
+  selector: {matchLabels: {app: settle-api}}
+  podMetricsEndpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
+      relabelings:
+        - {sourceLabels: [__meta_kubernetes_pod_label_pod_template_hash], targetLabel: pod_template_hash}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata: {name: settle-worker, namespace: settle}
+spec:
+  selector: {matchLabels: {app: settle-worker}}
+  podMetricsEndpoints:
+    - port: metrics
+      interval: 15s
+      relabelings:
+        - {sourceLabels: [__meta_kubernetes_pod_label_pod_template_hash], targetLabel: pod_template_hash}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata: {name: postgres-exporter, namespace: settle}
+spec:
+  selector: {matchLabels: {app: postgres-exporter}}
+  podMetricsEndpoints:
+    - {port: metrics, interval: 15s}

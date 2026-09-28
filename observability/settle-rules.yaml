@@ -1,0 +1,66 @@
+# SLOs (docs/SLO.md) and the 5 alerts. Every alert is actionable and links to its runbook.
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: settle
+  namespace: settle
+spec:
+  groups:
+    - name: settle-slo-recording
+      interval: 15s
+      rules:
+        # SLO-1: a request is good if it is non-5xx AND answered within 500 ms
+        # (/reports/daily excluded: it is a batch-style endpoint with its own 15 s budget).
+        - record: settle:slo_requests:rate5m
+          expr: sum(rate(settle_http_request_duration_seconds_count{route!="/reports/daily"}[5m]))
+        - record: settle:slo_good:rate5m
+          expr: sum(rate(settle_http_request_duration_seconds_bucket{route!="/reports/daily",le="0.5",status!~"5.."}[5m]))
+        - record: settle:slo_error_ratio:rate5m
+          expr: 1 - (settle:slo_good:rate5m / settle:slo_requests:rate5m)
+        - record: settle:slo_requests:rate1h
+          expr: sum(rate(settle_http_request_duration_seconds_count{route!="/reports/daily"}[1h]))
+        - record: settle:slo_good:rate1h
+          expr: sum(rate(settle_http_request_duration_seconds_bucket{route!="/reports/daily",le="0.5",status!~"5.."}[1h]))
+        - record: settle:slo_error_ratio:rate1h
+          expr: 1 - (settle:slo_good:rate1h / settle:slo_requests:rate1h)
+    - name: settle-alerts
+      rules:
+        - alert: SettleApiErrorBudgetBurn
+          # 99.5% SLO -> 0.5% budget. 14.4x burn on both 5m and 1h windows = 2% of the
+          # 30-day budget in 1 hour (Google SRE workbook multi-window fast burn).
+          expr: settle:slo_error_ratio:rate5m > (14.4 * 0.005) and settle:slo_error_ratio:rate1h > (14.4 * 0.005)
+          for: 2m
+          labels: {severity: page, service: settle}
+          annotations:
+            summary: "settle-api is burning its availability/latency error budget 14x too fast"
+            description: "{{ $value | humanizePercentage }} of API requests are failing or slower than 500 ms."
+            runbook_url: "RUNBOOK_BASE#settleapierrorbudgetburn"
+        - alert: SettlePodsRestarting
+          expr: sum by (namespace, pod) (increase(kube_pod_container_status_restarts_total{namespace="settle"}[10m])) > 2
+          for: 1m
+          labels: {severity: page, service: settle}
+          annotations:
+            summary: "{{ $labels.pod }} restarted more than twice in 10 minutes"
+            runbook_url: "RUNBOOK_BASE#settlepodsrestarting"
+        - alert: SettlePostgresConnectionsHigh
+          expr: sum(pg_stat_activity_count) / max(pg_settings_max_connections) > 0.8
+          for: 2m
+          labels: {severity: page, service: settle}
+          annotations:
+            summary: "Postgres is using {{ $value | humanizePercentage }} of max_connections"
+            runbook_url: "RUNBOOK_BASE#settlepostgresconnectionshigh"
+        - alert: SettleDuplicatePayout
+          # Money correctness: must never be > 0. No `for`: page on the first sample.
+          expr: max(settle_duplicate_payouts) > 0
+          labels: {severity: page, service: settle}
+          annotations:
+            summary: "{{ $value }} merchant/date pairs were paid more than once in the last 24h"
+            runbook_url: "RUNBOOK_BASE#settleduplicatepayout"
+        - alert: SettleSettlementsStale
+          # SLO-2 freshness: 99% of settlement jobs complete within 15 min of enqueue.
+          expr: max(settle_queue_oldest_job_age_seconds) > 900 or absent(up{job="settle/settle-worker"} == 1)
+          for: 5m
+          labels: {severity: page, service: settle}
+          annotations:
+            summary: "Oldest settlement job has waited more than 15 minutes (or no worker is up)"
+            runbook_url: "RUNBOOK_BASE#settlesettlementsstale"
