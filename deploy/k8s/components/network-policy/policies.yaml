@@ -1,0 +1,151 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: default-deny-all}
+spec:
+  podSelector: {}
+  policyTypes: [Ingress, Egress]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: allow-dns-egress}
+spec:
+  podSelector: {}
+  policyTypes: [Egress]
+  egress:
+    - to:
+        - namespaceSelector: {matchLabels: {kubernetes.io/metadata.name: kube-system}}
+      ports: [{protocol: UDP, port: 53}, {protocol: TCP, port: 53}]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: allow-prometheus-scrape}
+spec:
+  podSelector: {}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector: {matchLabels: {kubernetes.io/metadata.name: monitoring}}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: settle-api}
+spec:
+  podSelector: {matchLabels: {app: settle-api}}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - namespaceSelector: {matchLabels: {kubernetes.io/metadata.name: ingress-nginx}}
+      ports: [{port: 8000}]
+  egress:
+    - to: [{podSelector: {matchLabels: {app: toxiproxy}}}, {podSelector: {matchLabels: {app: postgres}}}]
+      ports: [{port: 5432}]
+    - to: [{podSelector: {matchLabels: {app: redis}}}]
+      ports: [{port: 6379}]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: settle-worker}
+spec:
+  podSelector: {matchLabels: {app: settle-worker}}
+  policyTypes: [Egress]
+  egress:
+    - to: [{podSelector: {matchLabels: {app: toxiproxy}}}, {podSelector: {matchLabels: {app: postgres}}}]
+      ports: [{port: 5432}]
+    - to: [{podSelector: {matchLabels: {app: redis}}}]
+      ports: [{port: 6379}]
+    - to: [{podSelector: {matchLabels: {app: mockbank}}}]
+      ports: [{port: 8080}]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: settle-migrate}
+spec:
+  podSelector: {matchLabels: {app: settle-migrate}}
+  policyTypes: [Egress]
+  egress:
+    - to: [{podSelector: {matchLabels: {app: toxiproxy}}}, {podSelector: {matchLabels: {app: postgres}}}]
+      ports: [{port: 5432}]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: toxiproxy}
+spec:
+  podSelector: {matchLabels: {app: toxiproxy}}
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - podSelector: {matchLabels: {app: settle-api}}
+        - podSelector: {matchLabels: {app: settle-worker}}
+        - podSelector: {matchLabels: {app: settle-migrate}}
+      ports: [{port: 5432}]
+    - from:
+        - podSelector: {matchLabels: {app: chaos}}
+      ports: [{port: 8474}]
+  egress:
+    - to: [{podSelector: {matchLabels: {app: postgres}}}]
+      ports: [{port: 5432}]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: postgres}
+spec:
+  podSelector: {matchLabels: {app: postgres}}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector: {matchLabels: {app: toxiproxy}}
+        - podSelector: {matchLabels: {app: postgres-exporter}}
+        - podSelector: {matchLabels: {app: settle-migrate}}
+        - podSelector: {matchLabels: {app: settle-api}}
+        - podSelector: {matchLabels: {app: settle-worker}}
+        - podSelector: {matchLabels: {app: pgload}}
+      ports: [{port: 5432}]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: redis}
+spec:
+  podSelector: {matchLabels: {app: redis}}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector: {matchLabels: {app: settle-api}}
+        - podSelector: {matchLabels: {app: settle-worker}}
+      ports: [{port: 6379}]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: mockbank}
+spec:
+  podSelector: {matchLabels: {app: mockbank}}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector: {matchLabels: {app: settle-worker}}
+        - podSelector: {matchLabels: {app: verify}}
+      ports: [{port: 8080}]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: postgres-exporter}
+spec:
+  podSelector: {matchLabels: {app: postgres-exporter}}
+  policyTypes: [Egress]
+  egress:
+    - to: [{podSelector: {matchLabels: {app: postgres}}}]
+      ports: [{port: 5432}]
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: chaos-and-load-tools}
+spec:
+  podSelector:
+    matchExpressions: [{key: app, operator: In, values: [chaos, pgload, verify]}]
+  policyTypes: [Egress]
+  egress:
+    - to: [{podSelector: {matchLabels: {app: toxiproxy}}}]
+      ports: [{port: 8474}]
+    - to: [{podSelector: {matchLabels: {app: postgres}}}]
+      ports: [{port: 5432}]
+    - to: [{podSelector: {matchLabels: {app: mockbank}}}]
+      ports: [{port: 8080}]

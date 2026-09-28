@@ -1,0 +1,6 @@
+# Task F: default-deny for the namespace, then only the flows settle needs.
+# Enforced on k3d/k3s (embedded kube-router network policy controller).
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+resources:
+  - policies.yaml
