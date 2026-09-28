@@ -1,0 +1,11 @@
+--- a/app/settle/api.py
++++ b/app/settle/api.py
+@@ -150,7 +150,7 @@
+             c.execute(
+                 text(
+                     "SELECT id, merchant_id, settlement_date, "
+-                    "COALESCE(amount_cents, (amount * 100)::bigint) AS amount_cents, status "
++                    "amount_minor AS amount_cents, status "
+                     "FROM settlements ORDER BY id DESC LIMIT :l"
+                 ),
+                 {"l": limit},
