@@ -1,0 +1,44 @@
+[pod/settle-worker-74d684d5ff-zklmb/worker] Traceback (most recent call last):
+[pod/settle-worker-74d684d5ff-zklmb/worker]   File "<frozen runpy>", line 198, in _run_module_as_main
+[pod/settle-worker-74d684d5ff-zklmb/worker]   File "<frozen runpy>", line 88, in _run_code
+[pod/settle-worker-74d684d5ff-zklmb/worker]   File "/app/settle/worker.py", line 31, in <module>
+[pod/settle-worker-74d684d5ff-zklmb/worker]     from settle import config, logging_setup, metrics
+[pod/settle-worker-74d684d5ff-zklmb/worker]   File "/app/settle/metrics.py", line 29, in <module>
+[pod/settle-worker-74d684d5ff-zklmb/worker]     DB_UNAVAILABLE = Counter("settle_db_unavailable_total", "Requests answered 503 because the DB was slow/unavailable")
+[pod/settle-worker-74d684d5ff-zklmb/worker]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-worker-74d684d5ff-zklmb/worker]   File "/venv/lib/python3.12/site-packages/prometheus_client/metrics.py", line 131, in __init__
+[pod/settle-worker-74d684d5ff-zklmb/worker]     self._metric_init()
+[pod/settle-worker-74d684d5ff-zklmb/worker]   File "/venv/lib/python3.12/site-packages/prometheus_client/metrics.py", line 333, in _metric_init
+[pod/settle-worker-74d684d5ff-zklmb/worker]     self._value = values.ValueClass(self._type, self._name, self._name + '_total', self._labelnames,
+[pod/settle-worker-74d684d5ff-zklmb/worker]                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-worker-74d684d5ff-zklmb/worker]   File "/venv/lib/python3.12/site-packages/prometheus_client/values.py", line 84, in __init__
+[pod/settle-worker-74d684d5ff-zklmb/worker]     self.__reset()
+[pod/settle-worker-74d684d5ff-zklmb/worker]   File "/venv/lib/python3.12/site-packages/prometheus_client/values.py", line 98, in __reset
+[pod/settle-worker-74d684d5ff-zklmb/worker]     files[file_prefix] = MmapedDict(filename)
+[pod/settle-worker-74d684d5ff-zklmb/worker]                          ^^^^^^^^^^^^^^^^^^^^
+[pod/settle-worker-74d684d5ff-zklmb/worker]   File "/venv/lib/python3.12/site-packages/prometheus_client/mmap_dict.py", line 64, in __init__
+[pod/settle-worker-74d684d5ff-zklmb/worker]     self._f = open(filename, 'rb' if read_mode else 'a+b')
+[pod/settle-worker-74d684d5ff-zklmb/worker]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-worker-74d684d5ff-zklmb/worker] OSError: [Errno 30] Read-only file system: 'counter_1.db'
+[pod/settle-worker-74d684d5ff-dxlz9/worker] Traceback (most recent call last):
+[pod/settle-worker-74d684d5ff-dxlz9/worker]   File "<frozen runpy>", line 198, in _run_module_as_main
+[pod/settle-worker-74d684d5ff-dxlz9/worker]   File "<frozen runpy>", line 88, in _run_code
+[pod/settle-worker-74d684d5ff-dxlz9/worker]   File "/app/settle/worker.py", line 31, in <module>
+[pod/settle-worker-74d684d5ff-dxlz9/worker]     from settle import config, logging_setup, metrics
+[pod/settle-worker-74d684d5ff-dxlz9/worker]   File "/app/settle/metrics.py", line 29, in <module>
+[pod/settle-worker-74d684d5ff-dxlz9/worker]     DB_UNAVAILABLE = Counter("settle_db_unavailable_total", "Requests answered 503 because the DB was slow/unavailable")
+[pod/settle-worker-74d684d5ff-dxlz9/worker]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-worker-74d684d5ff-dxlz9/worker]   File "/venv/lib/python3.12/site-packages/prometheus_client/metrics.py", line 131, in __init__
+[pod/settle-worker-74d684d5ff-dxlz9/worker]     self._metric_init()
+[pod/settle-worker-74d684d5ff-dxlz9/worker]   File "/venv/lib/python3.12/site-packages/prometheus_client/metrics.py", line 333, in _metric_init
+[pod/settle-worker-74d684d5ff-dxlz9/worker]     self._value = values.ValueClass(self._type, self._name, self._name + '_total', self._labelnames,
+[pod/settle-worker-74d684d5ff-dxlz9/worker]                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-worker-74d684d5ff-dxlz9/worker]   File "/venv/lib/python3.12/site-packages/prometheus_client/values.py", line 84, in __init__
+[pod/settle-worker-74d684d5ff-dxlz9/worker]     self.__reset()
+[pod/settle-worker-74d684d5ff-dxlz9/worker]   File "/venv/lib/python3.12/site-packages/prometheus_client/values.py", line 98, in __reset
+[pod/settle-worker-74d684d5ff-dxlz9/worker]     files[file_prefix] = MmapedDict(filename)
+[pod/settle-worker-74d684d5ff-dxlz9/worker]                          ^^^^^^^^^^^^^^^^^^^^
+[pod/settle-worker-74d684d5ff-dxlz9/worker]   File "/venv/lib/python3.12/site-packages/prometheus_client/mmap_dict.py", line 64, in __init__
+[pod/settle-worker-74d684d5ff-dxlz9/worker]     self._f = open(filename, 'rb' if read_mode else 'a+b')
+[pod/settle-worker-74d684d5ff-dxlz9/worker]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-worker-74d684d5ff-dxlz9/worker] OSError: [Errno 30] Read-only file system: 'counter_1.db'

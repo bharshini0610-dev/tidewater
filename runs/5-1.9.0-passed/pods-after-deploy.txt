@@ -1,0 +1,11 @@
+NAME                                    READY   STATUS      RESTARTS      AGE   IP           NODE                  NOMINATED NODE   READINESS GATES
+mockbank-7978dc478-xqfdp                1/1     Running     0             70s   10.42.1.10   k3d-settle-agent-0    <none>           <none>
+postgres-0                              1/1     Running     0             70s   10.42.0.11   k3d-settle-server-0   <none>           <none>
+postgres-exporter-84fc64858b-8nxg2      1/1     Running     0             70s   10.42.0.9    k3d-settle-server-0   <none>           <none>
+redis-cb8f6c4df-6rxrl                   1/1     Running     0             70s   10.42.1.11   k3d-settle-agent-0    <none>           <none>
+settle-api-866bff5cf-85v9w              1/1     Running     0             43s   10.42.1.14   k3d-settle-agent-0    <none>           <none>
+settle-api-866bff5cf-9c6sz              1/1     Running     0             43s   10.42.0.12   k3d-settle-server-0   <none>           <none>
+settle-migrate-1-9-0-1790577589-bsd7g   0/1     Completed   0             49s   10.42.1.13   k3d-settle-agent-0    <none>           <none>
+settle-worker-74d684d5ff-dxlz9          1/1     Running     3 (23s ago)   43s   10.42.0.13   k3d-settle-server-0   <none>           <none>
+settle-worker-74d684d5ff-zklmb          1/1     Running     3 (26s ago)   43s   10.42.1.15   k3d-settle-agent-0    <none>           <none>
+toxiproxy-76477bc764-72wp8              1/1     Running     0             70s   10.42.1.12   k3d-settle-agent-0    <none>           <none>

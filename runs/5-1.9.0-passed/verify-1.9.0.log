@@ -1,0 +1,10 @@
+[06:41:02Z] PASS  rollout status (readiness) — ReplicaSet 866bff5cf
+[06:41:02Z] PASS  /readyz and /version — readyz=200 version=1.9.0 expected=1.9.0
+[06:41:02Z] soak: 90s of mixed traffic
+[06:42:52Z] PASS  GET /settlements x3 — HTTP 200 200 200 
+[06:42:52Z] PASS  POST /settlements — HTTP 202
+[06:42:59Z] PASS  GET /reports/daily — HTTP 200 6.909082s
+[06:42:59Z] PASS  5xx ratio, new pods, 2m — 0.00% (threshold 1%)
+[06:42:59Z] PASS  p99 latency, new pods, excl. reports — 0.009951054478394557s (threshold 1s)
+[06:42:59Z] PASS  no merchant paid twice (bank ledger) — {"payouts":0,"merchant_dates":0,"paid_more_than_once":[]}
+[06:42:59Z] VERIFICATION PASSED for 1.9.0
