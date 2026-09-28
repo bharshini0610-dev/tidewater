@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: settle-api
+  labels: {app: settle-api}
+spec:
+  replicas: 2                      # HPA owns the count (2..6)
+  revisionHistoryLimit: 10         # rollback targets for `kubectl rollout undo`
+  minReadySeconds: 5
+  progressDeadlineSeconds: 180
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: {maxUnavailable: 0, maxSurge: 1}
+  selector:
+    matchLabels: {app: settle-api}
+  template:
+    metadata:
+      labels: {app: settle-api}
+    spec:
+      serviceAccountName: settle-api
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 45   # preStop 10s + gunicorn graceful_timeout 25s + margin
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile: {type: RuntimeDefault}
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector: {matchLabels: {app: settle-api}}
+      containers:
+        - name: api
+          image: settle-api
+          imagePullPolicy: IfNotPresent
+          ports:
+            - {name: http, containerPort: 8000}
+          envFrom:
+            - configMapRef: {name: settle-config}
+            - secretRef: {name: settle-secrets}
+          resources:
+            requests: {cpu: 250m, memory: 256Mi, ephemeral-storage: 64Mi}
+            limits: {cpu: "1", memory: 512Mi, ephemeral-storage: 256Mi}
+          # Liveness/readiness are process-local (no Postgres/Redis): a slow shared
+          # dependency can no longer make the kubelet restart every pod at once.
+          startupProbe:
+            httpGet: {path: /livez, port: http}
+            periodSeconds: 2
+            failureThreshold: 30
+          livenessProbe:
+            httpGet: {path: /livez, port: http}
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 6
+          readinessProbe:
+            httpGet: {path: /readyz, port: http}
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+          lifecycle:
+            preStop:
+              exec: {command: ["sleep", "10"]}   # let endpoints/ingress stop sending traffic first
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+          volumeMounts:
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - name: tmp
+          emptyDir: {sizeLimit: 64Mi}
