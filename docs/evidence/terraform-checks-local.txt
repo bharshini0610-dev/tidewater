@@ -1,0 +1,21 @@
+# Local run of infra/terraform/check.sh — 2026-09-28T05:32Z
+# Run with OpenTofu 1.11 + tflint 0.64 + checkov 3.3.20 in the author's sandbox (no Terraform binary available there).
+# The pipeline's 'terraform' job runs the same script with Terraform 1.16.4.
+
+== tofu fmt -check -recursive
+== tofu validate (bootstrap)
+Success! The configuration is valid.
+== tofu validate (envs/staging)
+Success! The configuration is valid.
+== tofu validate (envs/prod)
+Success! The configuration is valid.
+== tflint (recursive, aws ruleset)
+== checkov (bootstrap; suppressions and their justifications: bootstrap/.checkov.yaml + inline #checkov:skip)
+terraform scan results:
+Passed checks: 19, Failed checks: 0, Skipped checks: 3
+== checkov (envs/staging; suppressions and their justifications: envs/staging/.checkov.yaml + inline #checkov:skip)
+terraform scan results:
+Passed checks: 259, Failed checks: 0, Skipped checks: 6
+== checkov (envs/prod; suppressions and their justifications: envs/prod/.checkov.yaml + inline #checkov:skip)
+terraform scan results:
+Passed checks: 269, Failed checks: 0, Skipped checks: 6
