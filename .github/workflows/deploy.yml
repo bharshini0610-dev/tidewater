@@ -284,8 +284,10 @@ jobs:
             kubectl -n settle logs -l app=$app --previous --tail=100 --prefix > "$EVIDENCE/$app-candidate-previous.log" 2>&1 || true
           done
           if [[ "${{ steps.baseline.outputs.present }}" == "true" ]]; then
+            set -o pipefail
             scripts/rollback.sh 2>&1 | tee "$EVIDENCE/rollback.log"
             SOAK_SECONDS=30 scripts/verify.sh "${{ steps.baseline.outputs.version }}" 2>&1 | tee "$EVIDENCE/verify-after-rollback.log"
+            cp /tmp/verify-${{ steps.baseline.outputs.version }}.md "$EVIDENCE/verify-after-rollback.md"
           else
             echo "No previous release to roll back to (first deploy); scaling candidate to 0." | tee "$EVIDENCE/rollback.log"
             kubectl -n settle scale deploy/settle-api deploy/settle-worker --replicas=0

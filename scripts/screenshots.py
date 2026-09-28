@@ -31,23 +31,23 @@ grafana_pw = base64.b64decode(pw_b64).decode()
 with sync_playwright() as p:
     b = p.chromium.launch()
     page = b.new_page(viewport={"width": 1600, "height": 1000})
-    page.goto("http://localhost:9090/alerts?search=Settle", wait_until="networkidle")
+    page.goto("http://localhost:9090/alerts?search=Settle", wait_until="load", timeout=60000)
     time.sleep(2)
-    for sel in ["text=SettleApiErrorBudgetBurn", "text=firing"]:
+    for sel in ["text=SettleApiErrorBudgetBurn"]:
         try:
             page.locator(sel).first.click(timeout=2000)
         except Exception:  # noqa: BLE001 - UI differs across versions; screenshot anyway
             pass
     time.sleep(1)
     page.screenshot(path=f"{out}/{label}-prometheus-alerts.png", full_page=True)
-    page.goto("http://localhost:9093/#/alerts", wait_until="networkidle")
+    page.goto("http://localhost:9093/#/alerts", wait_until="load", timeout=60000)
     time.sleep(3)
     page.screenshot(path=f"{out}/{label}-alertmanager.png", full_page=True)
     ctx = b.new_context(viewport={"width": 1700, "height": 1250},
                         http_credentials={"username": "admin", "password": grafana_pw})
     g = ctx.new_page()
     g.goto("http://localhost:3000/d/settle-overview/settle?orgId=1&from=now-20m&to=now&kiosk",
-           wait_until="networkidle")
+           wait_until="load", timeout=60000)
     time.sleep(8)
     g.screenshot(path=f"{out}/{label}-grafana.png", full_page=True)
     b.close()
