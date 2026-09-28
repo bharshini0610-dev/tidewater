@@ -6,6 +6,7 @@ Manager via ECS task definition in AWS).
 """
 
 import os
+from urllib.parse import quote_plus
 
 
 def _int(name: str, default: int) -> int:
@@ -17,8 +18,30 @@ def _float(name: str, default: float) -> float:
 
 
 APP_VERSION = os.environ.get("APP_VERSION", "dev")
-DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql+psycopg://settle:settle@localhost:5432/settle")
-REDIS_URL = os.environ.get("REDIS_URL", "redis://localhost:6379/0")
+
+
+def _database_url() -> str:
+    # AWS/ECS injects the parts separately (password from the RDS-managed secret).
+    if host := os.environ.get("DB_HOST"):
+        user = quote_plus(os.environ["DB_USER"])
+        pw = quote_plus(os.environ["DB_PASSWORD"])
+        name = os.environ.get("DB_NAME", "settle")
+        ssl = os.environ.get("DB_SSLMODE", "require")
+        return f"postgresql+psycopg://{user}:{pw}@{host}:5432/{name}?sslmode={ssl}"
+    return os.environ.get("DATABASE_URL", "postgresql+psycopg://settle:settle@localhost:5432/settle")
+
+
+def _redis_url() -> str:
+    if host := os.environ.get("REDIS_HOST"):
+        scheme = "rediss" if os.environ.get("REDIS_TLS", "true").lower() == "true" else "redis"
+        auth = os.environ.get("REDIS_AUTH")
+        cred = f":{quote_plus(auth)}@" if auth else ""
+        return f"{scheme}://{cred}{host}:6379/0"
+    return os.environ.get("REDIS_URL", "redis://localhost:6379/0")
+
+
+DATABASE_URL = _database_url()
+REDIS_URL = _redis_url()
 BANK_URL = os.environ.get("BANK_URL", "http://localhost:8080")
 
 # Connection budget (see docs/CHANGES.md "Connection budget"). Per *process*.

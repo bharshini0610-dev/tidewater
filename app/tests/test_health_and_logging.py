@@ -76,3 +76,21 @@ def test_metrics_endpoint_exposes_request_counters():
         body = c.get("/metrics").text
     assert "settle_http_requests_total" in body
     assert "settle_http_request_duration_seconds_bucket" in body
+
+
+def test_aws_style_config_builds_urls_without_leaking_into_defaults(monkeypatch):
+    import importlib
+
+    from settle import config
+
+    monkeypatch.setenv("DB_HOST", "db.internal")
+    monkeypatch.setenv("DB_USER", "settle_admin")
+    monkeypatch.setenv("DB_PASSWORD", "p@ss/word")
+    monkeypatch.setenv("REDIS_HOST", "redis.internal")
+    monkeypatch.setenv("REDIS_AUTH", "tok")
+    c = importlib.reload(config)
+    assert c.DATABASE_URL == "postgresql+psycopg://settle_admin:p%40ss%2Fword@db.internal:5432/settle?sslmode=require"
+    assert c.REDIS_URL == "rediss://:tok@redis.internal:6379/0"
+    for k in ("DB_HOST", "DB_USER", "DB_PASSWORD", "REDIS_HOST", "REDIS_AUTH"):
+        monkeypatch.delenv(k)
+    importlib.reload(config)
