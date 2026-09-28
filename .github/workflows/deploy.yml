@@ -1,0 +1,15 @@
+name: deploy
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "DB password is ${{ secrets.DB_PASSWORD }}"
+      - run: docker build -t paylane/settle-api:latest app/
+      - run: docker push paylane/settle-api:latest
+      - run: kubectl apply -f deploy/k8s/
+      - run: kubectl -n settle rollout restart deployment/settle-api deployment/settle-worker
+      - run: kubectl -n settle exec deploy/settle-api -- sh -c 'for f in /migrations/*.sql; do psql $DATABASE_URL -f $f; done'
