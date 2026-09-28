@@ -94,3 +94,15 @@ def test_aws_style_config_builds_urls_without_leaking_into_defaults(monkeypatch)
     for k in ("DB_HOST", "DB_USER", "DB_PASSWORD", "REDIS_HOST", "REDIS_AUTH"):
         monkeypatch.delenv(k)
     importlib.reload(config)
+
+
+def test_empty_multiproc_dir_means_single_process_metrics():
+    """Regression: an empty PROMETHEUS_MULTIPROC_DIR crash-looped the worker (read-only fs)."""
+    import os
+    import subprocess
+    import sys
+
+    code = "import settle.worker, prometheus_client.values as v; print(v.ValueClass.__name__)"
+    env = {**os.environ, "PROMETHEUS_MULTIPROC_DIR": ""}
+    out = subprocess.run([sys.executable, "-c", code], env=env, capture_output=True, text=True, check=True)
+    assert out.stdout.strip() == "MutexValue"

@@ -279,6 +279,10 @@ jobs:
         if: steps.verify.outcome == 'failure'
         run: |
           python scripts/screenshots.py "before-rollback-${RELEASE}" "$EVIDENCE" || true
+          for app in settle-api settle-worker; do
+            kubectl -n settle logs -l app=$app --tail=200 --prefix > "$EVIDENCE/$app-candidate.log" 2>&1 || true
+            kubectl -n settle logs -l app=$app --previous --tail=100 --prefix > "$EVIDENCE/$app-candidate-previous.log" 2>&1 || true
+          done
           if [[ "${{ steps.baseline.outputs.present }}" == "true" ]]; then
             scripts/rollback.sh 2>&1 | tee "$EVIDENCE/rollback.log"
             SOAK_SECONDS=30 scripts/verify.sh "${{ steps.baseline.outputs.version }}" 2>&1 | tee "$EVIDENCE/verify-after-rollback.log"
