@@ -1,0 +1,83 @@
+LAST SEEN   TYPE      REASON                         OBJECT                                      MESSAGE
+3m13s       Normal    Scheduled                      pod/postgres-0                              Successfully assigned settle/postgres-0 to k3d-settle-agent-0
+3m2s        Normal    Scheduled                      pod/settle-worker-6dc59d77fc-zkf2p          Successfully assigned settle/settle-worker-6dc59d77fc-zkf2p to k3d-settle-server-0
+3m18s       Normal    Scheduled                      pod/toxiproxy-76477bc764-sdndz              Successfully assigned settle/toxiproxy-76477bc764-sdndz to k3d-settle-server-0
+3m2s        Normal    Scheduled                      pod/settle-worker-6dc59d77fc-bnszh          Successfully assigned settle/settle-worker-6dc59d77fc-bnszh to k3d-settle-agent-0
+3m18s       Normal    Scheduled                      pod/mockbank-7978dc478-xm5wb                Successfully assigned settle/mockbank-7978dc478-xm5wb to k3d-settle-server-0
+3m7s        Normal    Scheduled                      pod/settle-migrate-1-9-0-1790577067-2t58l   Successfully assigned settle/settle-migrate-1-9-0-1790577067-2t58l to k3d-settle-server-0
+3m2s        Normal    Scheduled                      pod/settle-api-59cb45cd59-rrjwb             Successfully assigned settle/settle-api-59cb45cd59-rrjwb to k3d-settle-server-0
+3m2s        Normal    Scheduled                      pod/settle-api-59cb45cd59-pvzjh             Successfully assigned settle/settle-api-59cb45cd59-pvzjh to k3d-settle-agent-0
+3m18s       Normal    Scheduled                      pod/redis-cb8f6c4df-2ltx6                   Successfully assigned settle/redis-cb8f6c4df-2ltx6 to k3d-settle-server-0
+3m18s       Normal    Scheduled                      pod/postgres-exporter-84fc64858b-8g76x      Successfully assigned settle/postgres-exporter-84fc64858b-8g76x to k3d-settle-server-0
+3m19s       Normal    Pulling                        pod/toxiproxy-76477bc764-sdndz              Pulling image "ghcr.io/shopify/toxiproxy:2.12.0"
+3m19s       Normal    SuccessfulCreate               replicaset/toxiproxy-76477bc764             Created pod: toxiproxy-76477bc764-sdndz
+3m19s       Normal    SuccessfulCreate               replicaset/mockbank-7978dc478               Created pod: mockbank-7978dc478-xm5wb
+3m19s       Normal    NoPods                         poddisruptionbudget/settle-worker           No matching pods found
+3m19s       Normal    Provisioning                   persistentvolumeclaim/data-postgres-0       External provisioner is provisioning volume for claim "settle/data-postgres-0"
+3m19s       Normal    Pulling                        pod/mockbank-7978dc478-xm5wb                Pulling image "localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710"
+3m19s       Normal    NoPods                         poddisruptionbudget/settle-api              No matching pods found
+3m19s       Normal    WaitForFirstConsumer           persistentvolumeclaim/data-postgres-0       waiting for first consumer to be created before binding
+3m19s       Normal    ScalingReplicaSet              deployment/mockbank                         Scaled up replica set mockbank-7978dc478 from 0 to 1
+3m19s       Normal    Pulling                        pod/postgres-exporter-84fc64858b-8g76x      Pulling image "quay.io/prometheuscommunity/postgres-exporter:v0.20.1"
+3m19s       Normal    ScalingReplicaSet              deployment/toxiproxy                        Scaled up replica set toxiproxy-76477bc764 from 0 to 1
+3m19s       Normal    ScalingReplicaSet              deployment/redis                            Scaled up replica set redis-cb8f6c4df from 0 to 1
+3m19s       Normal    SuccessfulCreate               replicaset/redis-cb8f6c4df                  Created pod: redis-cb8f6c4df-2ltx6
+3m19s       Normal    SuccessfulCreate               replicaset/postgres-exporter-84fc64858b     Created pod: postgres-exporter-84fc64858b-8g76x
+3m19s       Normal    ScalingReplicaSet              deployment/postgres-exporter                Scaled up replica set postgres-exporter-84fc64858b from 0 to 1
+3m19s       Normal    SuccessfulCreate               statefulset/postgres                        Create Claim data-postgres-0 Pod postgres-0 in StatefulSet postgres success
+3m19s       Normal    SuccessfulCreate               statefulset/postgres                        Create Pod postgres-0 in StatefulSet postgres successful
+3m19s       Normal    Pulling                        pod/redis-cb8f6c4df-2ltx6                   Pulling image "redis:7-alpine"
+3m18s       Normal    Pulled                         pod/postgres-exporter-84fc64858b-8g76x      Successfully pulled image "quay.io/prometheuscommunity/postgres-exporter:v0.20.1" in 1.381s (1.381s including waiting). Image size: 11784792 bytes.
+3m18s       Normal    Created                        pod/postgres-exporter-84fc64858b-8g76x      Container created
+3m17s       Normal    Pulled                         pod/redis-cb8f6c4df-2ltx6                   Successfully pulled image "redis:7-alpine" in 2.096s (2.097s including waiting). Image size: 16260342 bytes.
+3m17s       Normal    Created                        pod/redis-cb8f6c4df-2ltx6                   Container created
+3m17s       Normal    Started                        pod/postgres-exporter-84fc64858b-8g76x      Container started
+3m17s       Normal    Pulled                         pod/toxiproxy-76477bc764-sdndz              Successfully pulled image "ghcr.io/shopify/toxiproxy:2.12.0" in 1.409s (1.409s including waiting). Image size: 7554727 bytes.
+3m17s       Normal    Created                        pod/toxiproxy-76477bc764-sdndz              Container created
+3m17s       Normal    Started                        pod/toxiproxy-76477bc764-sdndz              Container started
+3m16s       Normal    Started                        pod/redis-cb8f6c4df-2ltx6                   Container started
+3m16s       Normal    ExternalProvisioning           persistentvolumeclaim/data-postgres-0       Waiting for a volume to be created either by the external provisioner 'rancher.io/local-path' or manually by the system administrator. If volume creation is delayed, please verify that the provisioner is running and correctly registered.
+3m15s       Normal    ProvisioningSucceeded          persistentvolumeclaim/data-postgres-0       Successfully provisioned volume pvc-9d4e908c-7281-4d0b-be4a-6d974a75cc4d
+3m15s       Normal    Created                        pod/mockbank-7978dc478-xm5wb                Container created
+3m15s       Normal    Pulled                         pod/mockbank-7978dc478-xm5wb                Successfully pulled image "localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710" in 3.545s (3.545s including waiting). Image size: 82143493 bytes.
+3m15s       Warning   Unhealthy                      pod/mockbank-7978dc478-xm5wb                Readiness probe failed: Get "http://10.42.1.9:8080/livez": dial tcp 10.42.1.9:8080: connect: connection refused
+3m15s       Normal    Started                        pod/mockbank-7978dc478-xm5wb                Container started
+3m14s       Normal    Pulling                        pod/postgres-0                              Pulling image "postgres:15-alpine"
+3m10s       Normal    Pulled                         pod/postgres-0                              Successfully pulled image "postgres:15-alpine" in 3.394s (3.394s including waiting). Image size: 115261681 bytes.
+3m10s       Warning   Unhealthy                      pod/postgres-0                              Readiness probe failed: /var/run/postgresql:5432 - no response
+3m10s       Normal    Started                        pod/postgres-0                              Container started
+3m10s       Normal    Created                        pod/postgres-0                              Container created
+3m8s        Normal    Pulled                         pod/settle-migrate-1-9-0-1790577067-2t58l   Container image "localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710" already present on machine and can be accessed by the pod
+3m8s        Normal    SuccessfulCreate               job/settle-migrate-1-9-0-1790577067         Created pod: settle-migrate-1-9-0-1790577067-2t58l
+3m8s        Normal    Started                        pod/settle-migrate-1-9-0-1790577067-2t58l   Container started
+3m8s        Normal    Created                        pod/settle-migrate-1-9-0-1790577067-2t58l   Container created
+3m4s        Normal    Completed                      job/settle-migrate-1-9-0-1790577067         Job completed
+3m3s        Normal    SuccessfulCreate               replicaset/settle-api-59cb45cd59            Created pod: settle-api-59cb45cd59-rrjwb
+3m3s        Normal    ScalingReplicaSet              deployment/settle-worker                    Scaled up replica set settle-worker-6dc59d77fc from 0 to 2
+3m3s        Normal    SuccessfulCreate               replicaset/settle-worker-6dc59d77fc         Created pod: settle-worker-6dc59d77fc-zkf2p
+3m3s        Normal    ScalingReplicaSet              deployment/settle-api                       Scaled up replica set settle-api-59cb45cd59 from 0 to 2
+3m3s        Normal    SuccessfulCreate               replicaset/settle-api-59cb45cd59            Created pod: settle-api-59cb45cd59-pvzjh
+3m3s        Normal    SuccessfulCreate               replicaset/settle-worker-6dc59d77fc         Created pod: settle-worker-6dc59d77fc-bnszh
+2m21s       Normal    Sync                           ingress/settle                              Scheduled for sync
+18s         Normal    BackOff                        pod/settle-api-59cb45cd59-rrjwb             Back-off pulling image "ghcr.io/example/settle-api:set-by-pipeline"
+18s         Warning   Failed                         pod/settle-api-59cb45cd59-rrjwb             Error: ImagePullBackOff
+17s         Warning   Failed                         pod/settle-worker-6dc59d77fc-zkf2p          Error: ImagePullBackOff
+17s         Normal    BackOff                        pod/settle-worker-6dc59d77fc-bnszh          Back-off pulling image "ghcr.io/example/settle-api:set-by-pipeline"
+17s         Warning   Failed                         pod/settle-worker-6dc59d77fc-bnszh          Error: ImagePullBackOff
+17s         Normal    BackOff                        pod/settle-worker-6dc59d77fc-zkf2p          Back-off pulling image "ghcr.io/example/settle-api:set-by-pipeline"
+14s         Warning   Failed                         pod/settle-api-59cb45cd59-pvzjh             Failed to pull image "ghcr.io/example/settle-api:set-by-pipeline": failed to pull and unpack image "ghcr.io/example/settle-api:set-by-pipeline": failed to resolve reference "ghcr.io/example/settle-api:set-by-pipeline": failed to authorize: failed to fetch anonymous token: unexpected status from GET request to https://ghcr.io/token?scope=repository%3Aexample%2Fsettle-api%3Apull&service=ghcr.io: 403 Forbidden
+14s         Warning   Failed                         pod/settle-api-59cb45cd59-pvzjh             Error: ErrImagePull
+14s         Normal    Pulling                        pod/settle-api-59cb45cd59-pvzjh             Pulling image "ghcr.io/example/settle-api:set-by-pipeline"
+6s          Normal    Pulling                        pod/settle-api-59cb45cd59-rrjwb             Pulling image "ghcr.io/example/settle-api:set-by-pipeline"
+6s          Warning   Failed                         pod/settle-worker-6dc59d77fc-zkf2p          Error: ErrImagePull
+6s          Warning   Failed                         pod/settle-worker-6dc59d77fc-zkf2p          Failed to pull image "ghcr.io/example/settle-api:set-by-pipeline": failed to pull and unpack image "ghcr.io/example/settle-api:set-by-pipeline": failed to resolve reference "ghcr.io/example/settle-api:set-by-pipeline": failed to authorize: failed to fetch anonymous token: unexpected status from GET request to https://ghcr.io/token?scope=repository%3Aexample%2Fsettle-api%3Apull&service=ghcr.io: 403 Forbidden
+6s          Normal    Pulling                        pod/settle-worker-6dc59d77fc-zkf2p          Pulling image "ghcr.io/example/settle-api:set-by-pipeline"
+6s          Warning   Failed                         pod/settle-api-59cb45cd59-rrjwb             Error: ErrImagePull
+6s          Warning   Failed                         pod/settle-api-59cb45cd59-rrjwb             Failed to pull image "ghcr.io/example/settle-api:set-by-pipeline": failed to pull and unpack image "ghcr.io/example/settle-api:set-by-pipeline": failed to resolve reference "ghcr.io/example/settle-api:set-by-pipeline": failed to authorize: failed to fetch anonymous token: unexpected status from GET request to https://ghcr.io/token?scope=repository%3Aexample%2Fsettle-api%3Apull&service=ghcr.io: 403 Forbidden
+4s          Warning   Failed                         pod/settle-worker-6dc59d77fc-bnszh          Error: ErrImagePull
+4s          Warning   Failed                         pod/settle-worker-6dc59d77fc-bnszh          Failed to pull image "ghcr.io/example/settle-api:set-by-pipeline": failed to pull and unpack image "ghcr.io/example/settle-api:set-by-pipeline": failed to resolve reference "ghcr.io/example/settle-api:set-by-pipeline": failed to authorize: failed to fetch anonymous token: unexpected status from GET request to https://ghcr.io/token?scope=repository%3Aexample%2Fsettle-api%3Apull&service=ghcr.io: 403 Forbidden
+4s          Normal    Pulling                        pod/settle-worker-6dc59d77fc-bnszh          Pulling image "ghcr.io/example/settle-api:set-by-pipeline"
+3s          Warning   FailedComputeMetricsReplicas   horizontalpodautoscaler/settle-api          invalid metrics (1 invalid out of 1), first error is: failed to get cpu resource metric value: failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+3s          Warning   FailedGetResourceMetric        horizontalpodautoscaler/settle-api          failed to get cpu utilization: unable to get metrics for resource cpu: no metrics returned from resource metrics API
+1s          Warning   Failed                         pod/settle-api-59cb45cd59-pvzjh             Error: ImagePullBackOff
+1s          Normal    BackOff                        pod/settle-api-59cb45cd59-pvzjh             Back-off pulling image "ghcr.io/example/settle-api:set-by-pipeline"
