@@ -148,7 +148,9 @@ jobs:
           context: .
           file: app/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
-          build-args: APP_VERSION=${{ env.RELEASE }}
+          build-args: |
+            APP_VERSION=${{ env.RELEASE }}
+            SOURCE_URL=${{ github.server_url }}/${{ github.repository }}
           tags: |
             ${{ steps.meta.outputs.image }}:${{ env.RELEASE }}
             ${{ steps.meta.outputs.image }}:${{ env.RELEASE }}-${{ github.sha }}

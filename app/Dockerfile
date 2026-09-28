@@ -17,9 +17,10 @@ RUN python -m venv /venv && /venv/bin/pip install --no-cache-dir -r requirements
 
 FROM ${PYTHON_IMAGE}
 ARG APP_VERSION=dev
+ARG SOURCE_URL=https://github.com/bharshini0610-dev/tidewater
 LABEL org.opencontainers.image.title="settle-api" \
       org.opencontainers.image.version="${APP_VERSION}" \
-      org.opencontainers.image.source="https://github.com/paylane/settle"
+      org.opencontainers.image.source="${SOURCE_URL}"
 # hadolint ignore=DL3005,DL3008
 RUN apt-get update && apt-get upgrade -y --no-install-recommends && rm -rf /var/lib/apt/lists/* \
     && groupadd --system --gid 10001 settle \
