@@ -1,0 +1,52 @@
+LAST SEEN   TYPE      REASON                  OBJECT                                      MESSAGE
+4m9s        Normal    Scheduled               pod/postgres-0                              Successfully assigned settle/postgres-0 to k3d-settle-server-0
+4m15s       Normal    Scheduled               pod/toxiproxy-76477bc764-gtk5h              Successfully assigned settle/toxiproxy-76477bc764-gtk5h to k3d-settle-server-0
+4m1s        Normal    Scheduled               pod/settle-migrate-1-9-0-1790576500-j8r5v   Successfully assigned settle/settle-migrate-1-9-0-1790576500-j8r5v to k3d-settle-agent-0
+4m15s       Normal    Scheduled               pod/redis-cb8f6c4df-4gk95                   Successfully assigned settle/redis-cb8f6c4df-4gk95 to k3d-settle-server-0
+4m15s       Normal    Scheduled               pod/mockbank-977bd9c8-thnht                 Successfully assigned settle/mockbank-977bd9c8-thnht to k3d-settle-server-0
+4m15s       Normal    Scheduled               pod/postgres-exporter-84fc64858b-z4pjd      Successfully assigned settle/postgres-exporter-84fc64858b-z4pjd to k3d-settle-server-0
+4m15s       Normal    ScalingReplicaSet       deployment/postgres-exporter                Scaled up replica set postgres-exporter-84fc64858b from 0 to 1
+4m15s       Normal    NoPods                  poddisruptionbudget/settle-worker           No matching pods found
+4m15s       Normal    ScalingReplicaSet       deployment/toxiproxy                        Scaled up replica set toxiproxy-76477bc764 from 0 to 1
+4m15s       Normal    SuccessfulCreate        replicaset/toxiproxy-76477bc764             Created pod: toxiproxy-76477bc764-gtk5h
+4m15s       Normal    SuccessfulCreate        replicaset/mockbank-977bd9c8                Created pod: mockbank-977bd9c8-thnht
+4m15s       Normal    ScalingReplicaSet       deployment/mockbank                         Scaled up replica set mockbank-977bd9c8 from 0 to 1
+4m15s       Normal    SuccessfulCreate        replicaset/redis-cb8f6c4df                  Created pod: redis-cb8f6c4df-4gk95
+4m15s       Normal    SuccessfulCreate        replicaset/postgres-exporter-84fc64858b     Created pod: postgres-exporter-84fc64858b-z4pjd
+4m15s       Normal    ExternalProvisioning    persistentvolumeclaim/data-postgres-0       Waiting for a volume to be created either by the external provisioner 'rancher.io/local-path' or manually by the system administrator. If volume creation is delayed, please verify that the provisioner is running and correctly registered.
+4m15s       Normal    ScalingReplicaSet       deployment/redis                            Scaled up replica set redis-cb8f6c4df from 0 to 1
+4m15s       Normal    NoPods                  poddisruptionbudget/settle-api              No matching pods found
+4m15s       Normal    Provisioning            persistentvolumeclaim/data-postgres-0       External provisioner is provisioning volume for claim "settle/data-postgres-0"
+4m15s       Normal    SuccessfulCreate        statefulset/postgres                        Create Pod postgres-0 in StatefulSet postgres successful
+4m15s       Normal    Pulling                 pod/postgres-exporter-84fc64858b-z4pjd      Pulling image "quay.io/prometheuscommunity/postgres-exporter:v0.20.1"
+4m15s       Normal    SuccessfulCreate        statefulset/postgres                        Create Claim data-postgres-0 Pod postgres-0 in StatefulSet postgres success
+4m15s       Normal    WaitForFirstConsumer    persistentvolumeclaim/data-postgres-0       waiting for first consumer to be created before binding
+4m14s       Normal    Started                 pod/toxiproxy-76477bc764-gtk5h              Container started
+4m14s       Normal    Started                 pod/postgres-exporter-84fc64858b-z4pjd      Container started
+4m14s       Normal    Created                 pod/postgres-exporter-84fc64858b-z4pjd      Container created
+4m14s       Normal    Pulled                  pod/postgres-exporter-84fc64858b-z4pjd      Successfully pulled image "quay.io/prometheuscommunity/postgres-exporter:v0.20.1" in 971ms (971ms including waiting). Image size: 11784792 bytes.
+4m14s       Normal    Created                 pod/toxiproxy-76477bc764-gtk5h              Container created
+4m14s       Normal    Pulled                  pod/toxiproxy-76477bc764-gtk5h              Successfully pulled image "ghcr.io/shopify/toxiproxy:2.12.0" in 644ms (644ms including waiting). Image size: 7554727 bytes.
+4m14s       Normal    Pulling                 pod/redis-cb8f6c4df-4gk95                   Pulling image "redis:7-alpine"
+4m14s       Normal    Pulling                 pod/toxiproxy-76477bc764-gtk5h              Pulling image "ghcr.io/shopify/toxiproxy:2.12.0"
+4m13s       Normal    Started                 pod/redis-cb8f6c4df-4gk95                   Container started
+4m13s       Normal    Created                 pod/redis-cb8f6c4df-4gk95                   Container created
+4m13s       Normal    Pulled                  pod/redis-cb8f6c4df-4gk95                   Successfully pulled image "redis:7-alpine" in 1.258s (1.258s including waiting). Image size: 16260342 bytes.
+4m11s       Normal    ProvisioningSucceeded   persistentvolumeclaim/data-postgres-0       Successfully provisioned volume pvc-138f9f51-7deb-48bc-aeb2-e176b435ad75
+4m10s       Normal    Pulling                 pod/postgres-0                              Pulling image "postgres:15-alpine"
+4m7s        Warning   Unhealthy               pod/postgres-0                              Readiness probe failed: /var/run/postgresql:5432 - no response
+4m7s        Normal    Started                 pod/postgres-0                              Container started
+4m7s        Normal    Created                 pod/postgres-0                              Container created
+4m7s        Normal    Pulled                  pod/postgres-0                              Successfully pulled image "postgres:15-alpine" in 2.49s (2.49s including waiting). Image size: 115261681 bytes.
+4m1s        Normal    SuccessfulCreate        job/settle-migrate-1-9-0-1790576500         Created pod: settle-migrate-1-9-0-1790576500-j8r5v
+3m23s       Normal    Sync                    ingress/settle                              Scheduled for sync
+89s         Normal    Pulling                 pod/mockbank-977bd9c8-thnht                 Pulling image "k3d-registry.localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710"
+89s         Warning   Failed                  pod/mockbank-977bd9c8-thnht                 Error: ErrImagePull
+89s         Warning   Failed                  pod/mockbank-977bd9c8-thnht                 Failed to pull image "k3d-registry.localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710": failed to pull and unpack image "k3d-registry.localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710": failed to resolve reference "k3d-registry.localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710": failed to do request: Head "https://k3d-registry.localhost:5050/v2/settle-api/manifests/sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710": dial tcp: lookup k3d-registry.localhost: no such host
+65s         Warning   Failed                  pod/settle-migrate-1-9-0-1790576500-j8r5v   Error: ErrImagePull
+65s         Warning   Failed                  pod/settle-migrate-1-9-0-1790576500-j8r5v   Failed to pull image "k3d-registry.localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710": failed to pull and unpack image "k3d-registry.localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710": failed to resolve reference "k3d-registry.localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710": failed to do request: Head "https://k3d-registry.localhost:5050/v2/settle-api/manifests/sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710": dial tcp: lookup k3d-registry.localhost: no such host
+65s         Normal    Pulling                 pod/settle-migrate-1-9-0-1790576500-j8r5v   Pulling image "k3d-registry.localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710"
+22s         Warning   Failed                  pod/mockbank-977bd9c8-thnht                 Error: ImagePullBackOff
+12s         Warning   Failed                  pod/settle-migrate-1-9-0-1790576500-j8r5v   Error: ImagePullBackOff
+12s         Normal    BackOff                 pod/settle-migrate-1-9-0-1790576500-j8r5v   Back-off pulling image "k3d-registry.localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710"
+8s          Normal    BackOff                 pod/mockbank-977bd9c8-thnht                 Back-off pulling image "k3d-registry.localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710"

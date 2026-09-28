@@ -1,0 +1,37 @@
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS   IMAGES                                                                                                           SELECTOR
+deployment.apps/mockbank            0/1     1            0           4m15s   mockbank     k3d-registry.localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710   app=mockbank
+deployment.apps/postgres-exporter   1/1     1            1           4m15s   exporter     quay.io/prometheuscommunity/postgres-exporter:v0.20.1                                                            app=postgres-exporter
+deployment.apps/redis               1/1     1            1           4m15s   redis        redis:7-alpine                                                                                                   app=redis
+deployment.apps/toxiproxy           1/1     1            1           4m15s   toxiproxy    ghcr.io/shopify/toxiproxy:2.12.0                                                                                 app=toxiproxy
+
+NAME                                           DESIRED   CURRENT   READY   AGE     CONTAINERS   IMAGES                                                                                                           SELECTOR
+replicaset.apps/mockbank-977bd9c8              1         1         0       4m15s   mockbank     k3d-registry.localhost:5050/settle-api@sha256:80430e2a4ee40a4a47e4af9b4c3dab0cc594769bad9f2cf5b5dac11d68b10710   app=mockbank,pod-template-hash=977bd9c8
+replicaset.apps/postgres-exporter-84fc64858b   1         1         1       4m15s   exporter     quay.io/prometheuscommunity/postgres-exporter:v0.20.1                                                            app=postgres-exporter,pod-template-hash=84fc64858b
+replicaset.apps/redis-cb8f6c4df                1         1         1       4m15s   redis        redis:7-alpine                                                                                                   app=redis,pod-template-hash=cb8f6c4df
+replicaset.apps/toxiproxy-76477bc764           1         1         1       4m15s   toxiproxy    ghcr.io/shopify/toxiproxy:2.12.0                                                                                 app=toxiproxy,pod-template-hash=76477bc764
+
+NAME                                        READY   STATUS             RESTARTS   AGE     IP           NODE                  NOMINATED NODE   READINESS GATES
+pod/mockbank-977bd9c8-thnht                 0/1     ImagePullBackOff   0          4m15s   10.42.1.9    k3d-settle-server-0   <none>           <none>
+pod/postgres-0                              1/1     Running            0          4m15s   10.42.1.14   k3d-settle-server-0   <none>           <none>
+pod/postgres-exporter-84fc64858b-z4pjd      1/1     Running            0          4m15s   10.42.1.10   k3d-settle-server-0   <none>           <none>
+pod/redis-cb8f6c4df-4gk95                   1/1     Running            0          4m15s   10.42.1.11   k3d-settle-server-0   <none>           <none>
+pod/settle-migrate-1-9-0-1790576500-j8r5v   0/1     ImagePullBackOff   0          4m1s    10.42.0.10   k3d-settle-agent-0    <none>           <none>
+pod/toxiproxy-76477bc764-gtk5h              1/1     Running            0          4m15s   10.42.1.12   k3d-settle-server-0   <none>           <none>
+
+NAME                                       MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
+poddisruptionbudget.policy/settle-api      1               N/A               0                     4m15s
+poddisruptionbudget.policy/settle-worker   1               N/A               0                     4m15s
+
+NAME                                                      POD-SELECTOR                   AGE
+networkpolicy.networking.k8s.io/allow-dns-egress          <none>                         4m15s
+networkpolicy.networking.k8s.io/allow-prometheus-scrape   <none>                         4m15s
+networkpolicy.networking.k8s.io/chaos-and-load-tools      app in (chaos,pgload,verify)   4m15s
+networkpolicy.networking.k8s.io/default-deny-all          <none>                         4m15s
+networkpolicy.networking.k8s.io/mockbank                  app=mockbank                   4m15s
+networkpolicy.networking.k8s.io/postgres                  app=postgres                   4m15s
+networkpolicy.networking.k8s.io/postgres-exporter         app=postgres-exporter          4m15s
+networkpolicy.networking.k8s.io/redis                     app=redis                      4m15s
+networkpolicy.networking.k8s.io/settle-api                app=settle-api                 4m15s
+networkpolicy.networking.k8s.io/settle-migrate            app=settle-migrate             4m15s
+networkpolicy.networking.k8s.io/settle-worker             app=settle-worker              4m15s
+networkpolicy.networking.k8s.io/toxiproxy                 app=toxiproxy                  4m15s

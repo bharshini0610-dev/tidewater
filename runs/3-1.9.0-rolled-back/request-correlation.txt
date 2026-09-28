@@ -1,0 +1,1 @@
+# One request followed across nginx -> API -> Redis -> worker -> bank (request_id=verify-post-1)
