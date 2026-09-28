@@ -1,0 +1,45 @@
+# The app reaches Postgres through toxiproxy locally so `make chaos-db` can inject latency
+# (Task F). With no toxics configured it is a transparent TCP proxy.
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: toxiproxy-config}
+data:
+  toxiproxy.json: |
+    [{"name": "postgres", "listen": "0.0.0.0:5432", "upstream": "postgres:5432", "enabled": true}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: pg-proxy, labels: {app: toxiproxy}}
+spec:
+  selector: {app: toxiproxy}
+  ports:
+    - {name: pg, port: 5432, targetPort: 5432}
+    - {name: api, port: 8474, targetPort: 8474}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: toxiproxy, labels: {app: toxiproxy}}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: toxiproxy}}
+  template:
+    metadata: {labels: {app: toxiproxy}}
+    spec:
+      automountServiceAccountToken: false
+      securityContext: {runAsNonRoot: true, runAsUser: 65534, seccompProfile: {type: RuntimeDefault}}
+      containers:
+        - name: toxiproxy
+          image: ghcr.io/shopify/toxiproxy:2.9.0
+          args: ["-host=0.0.0.0", "-config=/config/toxiproxy.json"]
+          ports: [{containerPort: 5432}, {containerPort: 8474}]
+          resources:
+            requests: {cpu: 50m, memory: 32Mi}
+            limits: {memory: 128Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+          volumeMounts: [{name: config, mountPath: /config}]
+      volumes:
+        - name: config
+          configMap: {name: toxiproxy-config}

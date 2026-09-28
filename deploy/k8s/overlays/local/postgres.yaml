@@ -1,0 +1,44 @@
+# Local stand-in for RDS. Credentials come from the `postgres-auth` Secret created by
+# scripts/create-secrets.sh (random per cluster, never committed).
+apiVersion: v1
+kind: Service
+metadata: {name: postgres, labels: {app: postgres}}
+spec:
+  selector: {app: postgres}
+  ports: [{name: pg, port: 5432, targetPort: 5432}]
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata: {name: postgres, labels: {app: postgres}}
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector: {matchLabels: {app: postgres}}
+  template:
+    metadata: {labels: {app: postgres}}
+    spec:
+      automountServiceAccountToken: false
+      securityContext: {fsGroup: 70, seccompProfile: {type: RuntimeDefault}}
+      containers:
+        - name: postgres
+          image: postgres:15-alpine
+          args: ["-c", "max_connections=100", "-c", "superuser_reserved_connections=3",
+                 "-c", "log_min_duration_statement=1000", "-c", "log_lock_waits=on"]
+          env:
+            - {name: POSTGRES_DB, value: settle}
+            - {name: POSTGRES_USER, valueFrom: {secretKeyRef: {name: postgres-auth, key: username}}}
+            - {name: POSTGRES_PASSWORD, valueFrom: {secretKeyRef: {name: postgres-auth, key: password}}}
+            - {name: PGDATA, value: /var/lib/postgresql/data/pgdata}
+          ports: [{containerPort: 5432}]
+          readinessProbe:
+            exec: {command: ["sh", "-c", "pg_isready -U \"$POSTGRES_USER\" -d settle"]}
+            periodSeconds: 5
+          resources:
+            requests: {cpu: 100m, memory: 256Mi}
+            limits: {memory: 512Mi}
+          volumeMounts: [{name: data, mountPath: /var/lib/postgresql/data}]
+  volumeClaimTemplates:
+    - metadata: {name: data}
+      spec:
+        accessModes: [ReadWriteOnce]
+        resources: {requests: {storage: 1Gi}}

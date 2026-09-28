@@ -1,0 +1,19 @@
+# Local k3d environment: the app from base plus in-cluster Postgres 15, Redis 7, the mock
+# bank, toxiproxy (for `make chaos-db`) and postgres-exporter.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: settle
+resources:
+  - namespace.yaml
+  - ../../base
+  - postgres.yaml
+  - redis.yaml
+  - toxiproxy.yaml
+  - mockbank.yaml
+  - postgres-exporter.yaml
+components:
+  - ../../components/network-policy
+images:
+  - name: settle-api
+    newName: ghcr.io/example/settle-api
+    newTag: set-by-pipeline

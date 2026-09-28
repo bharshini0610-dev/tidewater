@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata: {name: postgres-exporter, labels: {app: postgres-exporter}}
+spec:
+  selector: {app: postgres-exporter}
+  ports: [{name: metrics, port: 9187, targetPort: 9187}]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: postgres-exporter, labels: {app: postgres-exporter}}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: postgres-exporter}}
+  template:
+    metadata: {labels: {app: postgres-exporter}}
+    spec:
+      automountServiceAccountToken: false
+      securityContext: {runAsNonRoot: true, runAsUser: 65534, seccompProfile: {type: RuntimeDefault}}
+      containers:
+        - name: exporter
+          image: quay.io/prometheuscommunity/postgres-exporter:v0.15.0
+          env:
+            - {name: DATA_SOURCE_URI, value: "postgres:5432/settle?sslmode=disable"}
+            - {name: DATA_SOURCE_USER, valueFrom: {secretKeyRef: {name: postgres-auth, key: username}}}
+            - {name: DATA_SOURCE_PASS, valueFrom: {secretKeyRef: {name: postgres-auth, key: password}}}
+          ports: [{containerPort: 9187, name: metrics}]
+          resources:
+            requests: {cpu: 20m, memory: 32Mi}
+            limits: {memory: 128Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
