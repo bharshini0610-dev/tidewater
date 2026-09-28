@@ -1,0 +1,12 @@
+[12:25:58Z] PASS  rollout status (readiness) — ReplicaSet 85b4d8b6b5
+[12:25:58Z] PASS  /readyz and /version — readyz=200 version=1.9.1-rc expected=1.9.1-rc
+[12:25:58Z] soak: 90s of mixed traffic
+[12:27:48Z] FAIL  GET /settlements x3 — HTTP 500 500 500 
+[12:27:48Z] PASS  POST /settlements — HTTP 202
+[12:27:48Z] PASS  settlement paid end-to-end by worker — bank payouts=20
+[12:27:49Z] PASS  no container restarts (api + worker) — settle-api-85b4d8b6b5-96rvp=0 settle-api-85b4d8b6b5-cm756=0 settle-worker-6f779f9d85-6q764=0 settle-worker-6f779f9d85-lr85c=0 
+[12:27:56Z] PASS  GET /reports/daily — HTTP 200 7.788755s
+[12:27:56Z] FAIL  5xx ratio, new pods, 2m — 45.60% (threshold 1%)
+[12:27:56Z] PASS  p99 latency, new pods, excl. reports — 0.00996513918283844s (threshold 1s)
+[12:27:57Z] PASS  no merchant paid twice (bank ledger) — {"payouts":20,"merchant_dates":20,"paid_more_than_once":[]}
+[12:27:57Z] VERIFICATION FAILED for 1.9.1-rc

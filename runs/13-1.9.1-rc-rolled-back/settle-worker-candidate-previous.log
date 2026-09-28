@@ -1,0 +1,1 @@
+Error from server (BadRequest): previous terminated container "worker" in pod "settle-worker-6f779f9d85-lr85c" not found
