@@ -1,0 +1,23 @@
+[{"attributes":{"latency":3000,"jitter":0},"name":"latency","type":"latency","stream":"downstream","toxicity":1}]
+[11:58:50Z] chaos-db on 3000ms
+[11:58:50Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[11:59:00Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[11:59:11Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0.003983614228452281  api restarts=0
+[11:59:21Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0.003983614228452281  api restarts=0
+[11:59:31Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.07985243993000546  api restarts=0
+[11:59:42Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.11810619310723625  api restarts=0
+[11:59:52Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.11810619310723625  api restarts=0
+[12:00:02Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.14612114484991445  api restarts=0
+[12:00:12Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.1717398767423245  api restarts=0
+[12:00:22Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.1717398767423245  api restarts=0
+[12:00:33Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.19417659125120057  api restarts=0
+[12:00:43Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.2093127823522064  api restarts=0
+[12:00:53Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.2093127823522064  api restarts=0
+[12:01:03Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.22791471418313414  api restarts=0
+[12:01:14Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.24100081938523876  api restarts=0
+[12:01:24Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.24100081938523876  api restarts=0
+[12:01:34Z] SettleApiErrorBudgetBurn: firing   error ratio 5m=0.25063688643858884  api restarts=0
+screenshots written to out/evidence
+[]
+[12:02:01Z] chaos-db off 3000ms
+[12:03:32Z] alert SettleApiErrorBudgetBurn state=firing after 164s; restarts 0 -> 0
