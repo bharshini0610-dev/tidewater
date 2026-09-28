@@ -12,3 +12,4 @@ __pycache__/
 .terraform.lock.hcl.bak
 kubeconfig*
 /out/
+infra/terraform/**/.terraform.lock.hcl
