@@ -1,0 +1,2 @@
+# One request followed across nginx -> API -> Redis -> worker -> bank (request_id=verify-post-1)
+[pod/settle-worker-7bb6d87577-twxmt/worker] {"ts": "2026-09-28T07:56:12.073Z", "level": "WARNING", "service": "settle-worker", "logger": "settle.worker", "msg": "payout already sent, not paying again", "request_id": "verify-post-1", "job_id": "91ce430b0dd54a84b6e09d1a7c330b85", "idempotency_key": "1:2026-09-28"}
