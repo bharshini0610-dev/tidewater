@@ -13,7 +13,4 @@ resources:
   - ingress.yaml
   - worker-deployment.yaml
   - worker-pdb.yaml
-images:
-  - name: settle-api
-    newName: ghcr.io/example/settle-api
-    newTag: set-by-pipeline
+# Images are pinned per environment (overlay) by the pipeline, by digest.
