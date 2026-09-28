@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: settle-worker
+  labels: {app: settle-worker}
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 180
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: {maxUnavailable: 0, maxSurge: 1}
+  selector:
+    matchLabels: {app: settle-worker}
+  template:
+    metadata:
+      labels: {app: settle-worker}
+    spec:
+      serviceAccountName: settle-worker
+      automountServiceAccountToken: false
+      # SIGTERM -> the worker stops taking jobs and finishes the one in flight.
+      # Worst case job: bank timeout 10s + two short DB transactions; 60s leaves ample margin.
+      # Jobs are only acked after success, so even SIGKILL cannot lose a job (it is re-queued).
+      terminationGracePeriodSeconds: 60
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: worker
+          image: settle-api
+          imagePullPolicy: IfNotPresent
+          command: ["python", "-m", "settle.worker"]
+          ports:
+            - {name: metrics, containerPort: 9100}
+          envFrom:
+            - configMapRef: {name: settle-config}
+            - secretRef: {name: settle-secrets}
+          env:
+            - {name: PROMETHEUS_MULTIPROC_DIR, value: ""}
+          resources:
+            requests: {cpu: 100m, memory: 128Mi, ephemeral-storage: 32Mi}
+            limits: {cpu: 500m, memory: 256Mi, ephemeral-storage: 128Mi}
+          # Liveness = the main loop is still turning (heartbeat file), independent of
+          # Postgres/Redis/bank health, which the loop handles with backoff.
+          livenessProbe:
+            exec:
+              command: ["python", "-c", "import os,sys,time; sys.exit(0 if time.time()-os.path.getmtime('/tmp/worker-heartbeat')<60 else 1)"]
+            initialDelaySeconds: 20
+            periodSeconds: 15
+            timeoutSeconds: 5
+            failureThreshold: 4
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+          volumeMounts:
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - name: tmp
+          emptyDir: {sizeLimit: 32Mi}
