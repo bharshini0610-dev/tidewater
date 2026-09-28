@@ -1,0 +1,7 @@
+# Repository-wide suppressions only.
+skip-check:
+  # CKV_TF_1: "module source should be a commit hash" — all modules are local paths in this repo.
+  - CKV_TF_1
+  # CKV2_AWS_5: "SG must be attached" — SGs are attached via module outputs (ECS/RDS/ElastiCache),
+  # which checkov does not follow across module boundaries (false positive).
+  - CKV2_AWS_5

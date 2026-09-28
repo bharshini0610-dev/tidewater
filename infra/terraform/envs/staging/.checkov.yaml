@@ -1,0 +1,20 @@
+# Staging-only suppressions: deliberate cost trade-offs to stay under USD 250/month
+# (see infra/terraform/COST.md). Prod has none of these (envs/prod/.checkov.yaml).
+skip-check:
+  # CKV_AWS_150: ALB deletion protection off so the staging stack can be torn down/recreated.
+  - CKV_AWS_150
+  # CKV_AWS_338: 30-day log retention in staging (prod: 365) — log storage cost.
+  - CKV_AWS_338
+  # CKV2_AWS_50: single-node Redis in staging (no replica/auto-failover) — halves cache cost.
+  - CKV2_AWS_50
+  # CKV_AWS_157: single-AZ RDS in staging — Multi-AZ doubles the instance cost.
+  - CKV_AWS_157
+  # CKV_AWS_293: RDS deletion protection off in staging (recreatable, no customer data).
+  - CKV_AWS_293
+  # CKV_AWS_353 / CKV_AWS_118: Performance Insights / enhanced monitoring unavailable or not
+  # worth it on db.t4g.small; prod enables both.
+  - CKV_AWS_353
+  - CKV_AWS_118
+  # Repository-wide (same as envs/prod/.checkov.yaml):
+  - CKV_TF_1
+  - CKV2_AWS_5
