@@ -63,7 +63,7 @@ async def request_context(request: Request, call_next):
         elapsed = time.perf_counter() - start
         if route_tpl not in ("/metrics", "/livez", "/readyz"):
             metrics.HTTP_REQUESTS.labels(route_tpl, request.method, str(status)).inc()
-            metrics.HTTP_LATENCY.labels(route_tpl, request.method).observe(elapsed)
+            metrics.HTTP_LATENCY.labels(route_tpl, request.method, str(status)).observe(elapsed)
             log.info(
                 "request",
                 extra={
