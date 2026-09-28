@@ -1,0 +1,4 @@
+# One request followed across nginx -> API -> Redis -> worker -> bank (request_id=verify-post-1)
+{"ts":"2026-09-28T06:51:50+00:00","service":"ingress-nginx","request_id":"verify-post-1","method":"POST","uri":"/settlements","status":202,"rt":0.002,"urt":"0.002","upstream":"10.42.1.12:8000"}
+[pod/settle-api-7b6f6975fb-wf5db/api] {"ts": "2026-09-28T06:51:50.224Z", "level": "INFO", "service": "settle-api", "logger": "settle.api", "msg": "settlement enqueued", "request_id": "verify-post-1", "job_id": "4eb681a86a0a4a49b1936f48c0e5f3d5", "merchant_id": 1, "settlement_date": "2026-09-28"}
+[pod/settle-api-7b6f6975fb-wf5db/api] {"ts": "2026-09-28T06:51:50.225Z", "level": "INFO", "service": "settle-api", "logger": "settle.api", "msg": "request", "request_id": "verify-post-1", "method": "POST", "route": "/settlements", "status": 202, "duration_ms": 1.4}
