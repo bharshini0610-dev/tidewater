@@ -1,0 +1,21 @@
+# Local end-to-end run (API under gunicorn, worker, mock bank, Postgres 16, Redis 7)
+# 5 POST /settlements: merchants 1,2,3,1,1 for 2026-09-27 (merchant 1 requested three times)
+
+$ curl mockbank:8080/stats
+{"payouts":3,"merchant_dates":3,"paid_more_than_once":[]}
+
+$ curl api:8000/metrics | grep settle_http_requests_total
+settle_http_requests_total{method="POST",route="/settlements",status="202"} 5.0
+settle_http_requests_total{method="GET",route="/settlements",status="200"} 1.0
+settle_http_requests_total{method="GET",route="/reports/daily",status="200"} 1.0
+
+# worker log lines for request demo-req-1 (request_id carried API -> Redis job -> worker -> bank)
+{"ts": "2026-09-28T05:12:16.960Z", "level": "INFO", "service": "settle-api", "logger": "settle.api", "msg": "request", "request_id": "demo-req-1", "method": "POST", "route": "/settlements", "status": 202, "duration_ms": 9.6}
+{"ts": "2026-09-28T05:12:17.022Z", "level": "INFO", "service": "settle-worker", "logger": "httpx", "msg": "HTTP Request: POST http://localhost:8080/payouts \"HTTP/1.1 200 OK\"", "request_id": "demo-req-1", "job_id": "8277a39e993a4c5a9dfb263981ae835b"}
+{"ts": "2026-09-28T05:12:17.025Z", "level": "INFO", "service": "settle-worker", "logger": "settle.worker", "msg": "payout sent", "request_id": "demo-req-1", "job_id": "8277a39e993a4c5a9dfb263981ae835b", "idempotency_key": "1:2026-09-27", "amount_cents": 1025, "bank_replayed": false}
+{"ts": "2026-09-28T05:12:17.148Z", "level": "WARNING", "service": "settle-worker", "logger": "settle.worker", "msg": "payout already sent, not paying again", "request_id": "demo-req-1", "job_id": "71b6cc27ece54a729e5e07556f80ba56", "idempotency_key": "1:2026-09-27"}
+{"ts": "2026-09-28T05:12:17.152Z", "level": "WARNING", "service": "settle-worker", "logger": "settle.worker", "msg": "payout already sent, not paying again", "request_id": "demo-req-1", "job_id": "845fd61077324f0aa49b1c9113419aaf", "idempotency_key": "1:2026-09-27"}
+
+$ kill -TERM <worker pid>
+{"ts": "2026-09-28T05:12:27.191Z", "level": "INFO", "service": "settle-worker", "logger": "settle.worker", "msg": "signal received, draining", "signal": 15}
+{"ts": "2026-09-28T05:12:27.270Z", "level": "INFO", "service": "settle-worker", "logger": "settle.worker", "msg": "drained, exiting"}
