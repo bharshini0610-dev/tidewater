@@ -1,0 +1,12 @@
+controller:
+  service:
+    type: LoadBalancer
+  metrics:
+    enabled: true
+  config:
+    generate-request-id: "true"       # forwards an incoming X-Request-ID or creates one
+    log-format-escape-json: "true"
+    log-format-upstream: '{"ts":"$time_iso8601","service":"ingress-nginx","request_id":"$req_id","method":"$request_method","uri":"$uri","status":$status,"rt":$request_time,"urt":"$upstream_response_time","upstream":"$upstream_addr"}'
+    server-tokens: "false"
+  resources:
+    requests: {cpu: 50m, memory: 90Mi}
