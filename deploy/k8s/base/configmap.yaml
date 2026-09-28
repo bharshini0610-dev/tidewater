@@ -1,0 +1,25 @@
+# Non-secret configuration only. DATABASE_URL / REDIS_URL live in the `settle-secrets`
+# Secret, which is created at deploy time (scripts/create-secrets.sh) and never committed.
+#
+# Connection budget (Postgres max_connections = 100) — see docs/CHANGES.md:
+#   API    : HPA max 6 pods + 1 surge pod = 7 x 4 gunicorn workers x (pool 2 + overflow 0) = 56
+#   worker : 2 replicas + 1 surge            = 3 x 1 process x (pool 2 + overflow 0)      =  6
+#   migrate Job 1, postgres-exporter 2, superuser_reserved_connections 3, admin headroom 10 = 16
+#   total                                                                                   = 78 <= 100
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: settle-config
+data:
+  LOG_LEVEL: INFO
+  GUNICORN_WORKERS: "4"
+  GUNICORN_TIMEOUT: "30"
+  GUNICORN_GRACEFUL_TIMEOUT: "25"
+  DB_POOL_SIZE: "2"
+  DB_MAX_OVERFLOW: "0"
+  DB_POOL_TIMEOUT_S: "2"
+  DB_STATEMENT_TIMEOUT_MS: "5000"
+  DB_REPORT_STATEMENT_TIMEOUT_MS: "15000"
+  BANK_URL: http://mockbank:8080
+  BANK_TIMEOUT_S: "10"
+  MAX_ATTEMPTS: "5"
