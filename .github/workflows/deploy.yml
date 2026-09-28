@@ -278,7 +278,7 @@ jobs:
         id: rollback
         if: steps.verify.outcome == 'failure'
         run: |
-          python scripts/screenshots.py "before-rollback-${RELEASE}" "$EVIDENCE" || true
+          python scripts/screenshots.py "before-rollback-${RELEASE}" "$EVIDENCE" >> "$EVIDENCE/screenshots.log" 2>&1 || true
           for app in settle-api settle-worker; do
             kubectl -n settle logs -l app=$app --tail=200 --prefix > "$EVIDENCE/$app-candidate.log" 2>&1 || true
             kubectl -n settle logs -l app=$app --previous --tail=100 --prefix > "$EVIDENCE/$app-candidate-previous.log" 2>&1 || true
@@ -311,7 +311,7 @@ jobs:
             kubectl -n ingress-nginx logs deploy/ingress-nginx-controller --tail=2000 | grep verify-post-1 | head -3
             grep -h 'verify-post-1' "$EVIDENCE/api-logs.jsonl" "$EVIDENCE/worker-logs.jsonl" | head -8; } > "$EVIDENCE/request-correlation.txt"
           cp /tmp/verify-*.md "$EVIDENCE/" 2>/dev/null
-          python scripts/screenshots.py "final-${RELEASE}" "$EVIDENCE"
+          python scripts/screenshots.py "final-${RELEASE}" "$EVIDENCE" >> "$EVIDENCE/screenshots.log" 2>&1
           echo "found: $rid"
           exit 0
 
