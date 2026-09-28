@@ -7,7 +7,12 @@ processes. The worker is a single process and serves metrics on its own port.
 
 import os
 
-from prometheus_client import (
+# prometheus_client switches to multiprocess mode if the variable merely *exists*, even
+# when empty (the worker sets it to ""), and then writes .db files into the read-only cwd.
+if not os.environ.get("PROMETHEUS_MULTIPROC_DIR"):
+    os.environ.pop("PROMETHEUS_MULTIPROC_DIR", None)
+
+from prometheus_client import (  # noqa: E402
     CONTENT_TYPE_LATEST,
     CollectorRegistry,
     Counter,

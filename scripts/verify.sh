@@ -42,6 +42,20 @@ check "GET /settlements x3" $ok "HTTP $codes"
 c=$(curl -s -o /dev/null -w '%{http_code}' -m 5 -X POST -H 'X-Request-ID: verify-post-1' "$INGRESS_URL/settlements?merchant_id=1")
 check "POST /settlements" "$([[ $c == 202 ]] && echo 1 || echo 0)" "HTTP $c"
 
+# End-to-end: the settlement enqueued above must be paid by the worker (exactly once).
+paid=0
+for _ in $(seq 1 20); do
+  s=$(kubectl -n "$NS" exec deploy/mockbank -- python -c 'import urllib.request;print(urllib.request.urlopen("http://localhost:8080/stats").read().decode())' 2>/dev/null)
+  paid=$(echo "$s" | python3 -c 'import json,sys; print(json.load(sys.stdin)["payouts"])' 2>/dev/null || echo 0)
+  [[ "$paid" -ge 1 ]] && break
+  sleep 3
+done
+check "settlement paid end-to-end by worker" "$([[ "$paid" -ge 1 ]] && echo 1 || echo 0)" "bank payouts=$paid"
+
+restarts=$(kubectl -n "$NS" get pods -l 'app in (settle-api,settle-worker)' -o jsonpath='{range .items[*]}{.metadata.name}={.status.containerStatuses[0].restartCount}{" "}{end}')
+total=$(echo "$restarts" | tr ' ' '\n' | awk -F= '{s+=$2} END {print s+0}')
+check "no container restarts (api + worker)" "$([[ "$total" == 0 ]] && echo 1 || echo 0)" "$restarts"
+
 c=$(curl -s -o /dev/null -w '%{http_code} %{time_total}s' -m 25 "$INGRESS_URL/reports/daily")
 check "GET /reports/daily" "$([[ ${c%% *} == 200 ]] && echo 1 || echo 0)" "HTTP $c"
 

@@ -311,6 +311,22 @@ jobs:
           echo "found: $rid"
           exit 0
 
+      - name: Promote — record new production pointer
+        if: steps.verify.outcome == 'success' && github.ref == 'refs/heads/main'
+        run: |
+          jq -n --arg v "$RELEASE" --arg d "${{ needs.build.outputs.digest }}" \
+                --arg r "$GITHUB_RUN_ID" --arg s "$GITHUB_SHA" \
+                '{version:$v, image:"settle-api", digest:$d, run_id:$r, commit:$s, artifact:("image-"+$v)}' > deploy/releases/production.json
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
+          git add deploy/releases/production.json
+          git commit -m "release: promote settle-api ${RELEASE} (${{ needs.build.outputs.digest }}) [skip ci]"
+          if ! git push origin HEAD:main; then
+            git fetch --depth=50 origin main && git rebase origin/main && git push origin HEAD:main
+          fi
+          git log -1 --format='%h %s' | tee "$EVIDENCE/promotion.txt"
+          echo "### Promoted ${RELEASE} to production pointer" >> "$GITHUB_STEP_SUMMARY"
+
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
@@ -327,19 +343,6 @@ jobs:
           git fetch origin evidence 2>/dev/null && git worktree add ev origin/evidence -B evidence || { git worktree add --orphan -b evidence ev; }
           mkdir -p "ev/$dest" && cp -r out/evidence/. "ev/$dest/"
           cd ev && git add -A && git commit -qm "evidence: run ${GITHUB_RUN_NUMBER} ${RELEASE} (${{ steps.verify.outcome }})" && git push -q origin evidence
-
-      - name: Promote — record new production pointer
-        if: steps.verify.outcome == 'success' && github.ref == 'refs/heads/main'
-        run: |
-          jq -n --arg v "$RELEASE" --arg d "${{ needs.build.outputs.digest }}" \
-                --arg r "$GITHUB_RUN_ID" --arg s "$GITHUB_SHA" \
-                '{version:$v, image:"settle-api", digest:$d, run_id:$r, commit:$s, artifact:("image-"+$v)}' > deploy/releases/production.json
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
-          git add deploy/releases/production.json
-          git commit -m "release: promote settle-api ${RELEASE} (${{ needs.build.outputs.digest }}) [skip ci]"
-          git pull --rebase -q origin main && git push -q origin HEAD:main
-          echo "### Promoted ${RELEASE} to production pointer" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Fail the run if the release was rejected
         if: steps.verify.outcome == 'failure'
