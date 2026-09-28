@@ -1,0 +1,26 @@
+# ingress-nginx. Inherited problems fixed here:
+# * proxy-read-timeout 5s < /reports/daily (6-9s)  -> 504s. Now 30s (report statement_timeout is 15s).
+# * proxy-next-upstream included `non_idempotent`: nginx re-sent timed-out POST /settlements
+#   to another pod, enqueuing the same settlement twice. Now only connection errors are retried.
+# ingress-nginx generates X-Request-ID and forwards it; the app logs it (correlation).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: settle
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "5"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-next-upstream: "error"
+    nginx.ingress.kubernetes.io/proxy-next-upstream-tries: "2"
+    nginx.ingress.kubernetes.io/proxy-body-size: "1m"
+    nginx.ingress.kubernetes.io/limit-rps: "50"
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: {name: settle-api, port: {name: http}}
