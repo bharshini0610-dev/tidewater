@@ -1,0 +1,5 @@
+deployment.apps/settle-api 
+REVISION  CHANGE-CAUSE
+1         deploy 1.9.0 localhost:5050/settle-api@sha256:4bf6f884e5cc7a018a09246f675e94377025cb7460920e2a0bbb778a3f20edc4
+2         deploy 1.9.0 localhost:5050/settle-api@sha256:e56400688713fb6ded8249283b91710679bd28e0e03a6b6afe281b96e421356d
+
