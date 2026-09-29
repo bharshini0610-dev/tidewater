@@ -1,0 +1,400 @@
+[pod/settle-api-7df77944fc-59zz9/api]     raise exc
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     await self.app(scope, receive, _send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 197, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     response = await self.dispatch_func(request, call_next)
+[pod/settle-api-7df77944fc-59zz9/api]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/app/settle/api.py", line 56, in request_context
+[pod/settle-api-7df77944fc-59zz9/api]     response = await call_next(request)
+[pod/settle-api-7df77944fc-59zz9/api]                ^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 173, in call_next
+[pod/settle-api-7df77944fc-59zz9/api]     raise app_exc from app_exc.__cause__ or app_exc.__context__
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 149, in coro
+[pod/settle-api-7df77944fc-59zz9/api]     await self.app(scope, receive_or_disconnect, send_no_error)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+[pod/settle-api-7df77944fc-59zz9/api]     raise exc
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+[pod/settle-api-7df77944fc-59zz9/api]     await app(scope, receive, sender)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     await self.app(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/routing.py", line 676, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     await self.middleware_stack(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 2734, in app
+[pod/settle-api-7df77944fc-59zz9/api]     await route.handle(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 1281, in handle
+[pod/settle-api-7df77944fc-59zz9/api]     await super().handle(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/routing.py", line 282, in handle
+[pod/settle-api-7df77944fc-59zz9/api]     await self.app(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 158, in app
+[pod/settle-api-7df77944fc-59zz9/api]     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+[pod/settle-api-7df77944fc-59zz9/api]     raise exc
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+[pod/settle-api-7df77944fc-59zz9/api]     await app(scope, receive, sender)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 144, in app
+[pod/settle-api-7df77944fc-59zz9/api]     response = await f(request)
+[pod/settle-api-7df77944fc-59zz9/api]                ^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 706, in app
+[pod/settle-api-7df77944fc-59zz9/api]     raw_response = await run_endpoint_function(
+[pod/settle-api-7df77944fc-59zz9/api]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 354, in run_endpoint_function
+[pod/settle-api-7df77944fc-59zz9/api]     return await run_in_threadpool(dependant.call, **values)
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+[pod/settle-api-7df77944fc-59zz9/api]     return await anyio.to_thread.run_sync(func)
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/anyio/to_thread.py", line 65, in run_sync
+[pod/settle-api-7df77944fc-59zz9/api]     return await get_async_backend().run_sync_in_worker_thread(
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 2706, in run_sync_in_worker_thread
+[pod/settle-api-7df77944fc-59zz9/api]     return await future
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1100, in run
+[pod/settle-api-7df77944fc-59zz9/api]     result = context.run(func, *args)
+[pod/settle-api-7df77944fc-59zz9/api]              ^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/app/settle/api.py", line 150, in list_settlements
+[pod/settle-api-7df77944fc-59zz9/api]     c.execute(
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1448, in execute
+[pod/settle-api-7df77944fc-59zz9/api]     return meth(
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 533, in _execute_on_connection
+[pod/settle-api-7df77944fc-59zz9/api]     return connection._execute_clauseelement(
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1668, in _execute_clauseelement
+[pod/settle-api-7df77944fc-59zz9/api]     ret = self._execute_context(
+[pod/settle-api-7df77944fc-59zz9/api]           ^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1822, in _execute_context
+[pod/settle-api-7df77944fc-59zz9/api]     return self._exec_single_context(
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1962, in _exec_single_context
+[pod/settle-api-7df77944fc-59zz9/api]     self._handle_dbapi_exception(
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2332, in _handle_dbapi_exception
+[pod/settle-api-7df77944fc-59zz9/api]     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1943, in _exec_single_context
+[pod/settle-api-7df77944fc-59zz9/api]     self.dialect.do_execute(
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 1180, in do_execute
+[pod/settle-api-7df77944fc-59zz9/api]     cursor.execute(statement, parameters)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/psycopg/cursor.py", line 117, in execute
+[pod/settle-api-7df77944fc-59zz9/api]     raise ex.with_traceback(None)
+[pod/settle-api-7df77944fc-59zz9/api] sqlalchemy.exc.ProgrammingError: (psycopg.errors.UndefinedColumn) column "amount_minor" does not exist
+[pod/settle-api-7df77944fc-59zz9/api] LINE 1: SELECT id, merchant_id, settlement_date, amount_minor AS amo...
+[pod/settle-api-7df77944fc-59zz9/api]                                                  ^
+[pod/settle-api-7df77944fc-59zz9/api] [SQL: SELECT id, merchant_id, settlement_date, amount_minor AS amount_cents, status FROM settlements ORDER BY id DESC LIMIT %(l)s]
+[pod/settle-api-7df77944fc-59zz9/api] [parameters: {'l': 5}]
+[pod/settle-api-7df77944fc-59zz9/api] (Background on this error at: https://sqlalche.me/e/21/f405)
+[pod/settle-api-7df77944fc-59zz9/api] {"ts": "2026-09-29T02:19:10.112Z", "level": "INFO", "service": "settle-api", "logger": "settle.api", "msg": "request", "request_id": "7bba2167d82ad01b1b82d959823b02d9", "method": "GET", "route": "/settlements", "status": 500, "duration_ms": 1.9}
+[pod/settle-api-7df77944fc-59zz9/api] [2026-09-29 02:19:10 +0000] [12] [ERROR] Exception in ASGI application
+[pod/settle-api-7df77944fc-59zz9/api] Traceback (most recent call last):
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1943, in _exec_single_context
+[pod/settle-api-7df77944fc-59zz9/api]     self.dialect.do_execute(
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 1180, in do_execute
+[pod/settle-api-7df77944fc-59zz9/api]     cursor.execute(statement, parameters)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/psycopg/cursor.py", line 117, in execute
+[pod/settle-api-7df77944fc-59zz9/api]     raise ex.with_traceback(None)
+[pod/settle-api-7df77944fc-59zz9/api] psycopg.errors.UndefinedColumn: column "amount_minor" does not exist
+[pod/settle-api-7df77944fc-59zz9/api] LINE 1: SELECT id, merchant_id, settlement_date, amount_minor AS amo...
+[pod/settle-api-7df77944fc-59zz9/api]                                                  ^
+[pod/settle-api-7df77944fc-59zz9/api] 
+[pod/settle-api-7df77944fc-59zz9/api] The above exception was the direct cause of the following exception:
+[pod/settle-api-7df77944fc-59zz9/api] 
+[pod/settle-api-7df77944fc-59zz9/api] Traceback (most recent call last):
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+[pod/settle-api-7df77944fc-59zz9/api]     result = await app(  # type: ignore[func-returns-value]
+[pod/settle-api-7df77944fc-59zz9/api]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     return await self.app(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/applications.py", line 1163, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     await super().__call__(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/applications.py", line 96, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     await self.middleware_stack(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 186, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     raise exc
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     await self.app(scope, receive, _send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 197, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     response = await self.dispatch_func(request, call_next)
+[pod/settle-api-7df77944fc-59zz9/api]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/app/settle/api.py", line 56, in request_context
+[pod/settle-api-7df77944fc-59zz9/api]     response = await call_next(request)
+[pod/settle-api-7df77944fc-59zz9/api]                ^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 173, in call_next
+[pod/settle-api-7df77944fc-59zz9/api]     raise app_exc from app_exc.__cause__ or app_exc.__context__
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 149, in coro
+[pod/settle-api-7df77944fc-59zz9/api]     await self.app(scope, receive_or_disconnect, send_no_error)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+[pod/settle-api-7df77944fc-59zz9/api]     raise exc
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+[pod/settle-api-7df77944fc-59zz9/api]     await app(scope, receive, sender)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     await self.app(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/routing.py", line 676, in __call__
+[pod/settle-api-7df77944fc-59zz9/api]     await self.middleware_stack(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 2734, in app
+[pod/settle-api-7df77944fc-59zz9/api]     await route.handle(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 1281, in handle
+[pod/settle-api-7df77944fc-59zz9/api]     await super().handle(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/routing.py", line 282, in handle
+[pod/settle-api-7df77944fc-59zz9/api]     await self.app(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 158, in app
+[pod/settle-api-7df77944fc-59zz9/api]     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+[pod/settle-api-7df77944fc-59zz9/api]     raise exc
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+[pod/settle-api-7df77944fc-59zz9/api]     await app(scope, receive, sender)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 144, in app
+[pod/settle-api-7df77944fc-59zz9/api]     response = await f(request)
+[pod/settle-api-7df77944fc-59zz9/api]                ^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 706, in app
+[pod/settle-api-7df77944fc-59zz9/api]     raw_response = await run_endpoint_function(
+[pod/settle-api-7df77944fc-59zz9/api]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 354, in run_endpoint_function
+[pod/settle-api-7df77944fc-59zz9/api]     return await run_in_threadpool(dependant.call, **values)
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+[pod/settle-api-7df77944fc-59zz9/api]     return await anyio.to_thread.run_sync(func)
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/anyio/to_thread.py", line 65, in run_sync
+[pod/settle-api-7df77944fc-59zz9/api]     return await get_async_backend().run_sync_in_worker_thread(
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 2706, in run_sync_in_worker_thread
+[pod/settle-api-7df77944fc-59zz9/api]     return await future
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1100, in run
+[pod/settle-api-7df77944fc-59zz9/api]     result = context.run(func, *args)
+[pod/settle-api-7df77944fc-59zz9/api]              ^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/app/settle/api.py", line 150, in list_settlements
+[pod/settle-api-7df77944fc-59zz9/api]     c.execute(
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1448, in execute
+[pod/settle-api-7df77944fc-59zz9/api]     return meth(
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 533, in _execute_on_connection
+[pod/settle-api-7df77944fc-59zz9/api]     return connection._execute_clauseelement(
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1668, in _execute_clauseelement
+[pod/settle-api-7df77944fc-59zz9/api]     ret = self._execute_context(
+[pod/settle-api-7df77944fc-59zz9/api]           ^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1822, in _execute_context
+[pod/settle-api-7df77944fc-59zz9/api]     return self._exec_single_context(
+[pod/settle-api-7df77944fc-59zz9/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1962, in _exec_single_context
+[pod/settle-api-7df77944fc-59zz9/api]     self._handle_dbapi_exception(
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2332, in _handle_dbapi_exception
+[pod/settle-api-7df77944fc-59zz9/api]     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1943, in _exec_single_context
+[pod/settle-api-7df77944fc-59zz9/api]     self.dialect.do_execute(
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 1180, in do_execute
+[pod/settle-api-7df77944fc-59zz9/api]     cursor.execute(statement, parameters)
+[pod/settle-api-7df77944fc-59zz9/api]   File "/venv/lib/python3.12/site-packages/psycopg/cursor.py", line 117, in execute
+[pod/settle-api-7df77944fc-59zz9/api]     raise ex.with_traceback(None)
+[pod/settle-api-7df77944fc-59zz9/api] sqlalchemy.exc.ProgrammingError: (psycopg.errors.UndefinedColumn) column "amount_minor" does not exist
+[pod/settle-api-7df77944fc-59zz9/api] LINE 1: SELECT id, merchant_id, settlement_date, amount_minor AS amo...
+[pod/settle-api-7df77944fc-59zz9/api]                                                  ^
+[pod/settle-api-7df77944fc-59zz9/api] [SQL: SELECT id, merchant_id, settlement_date, amount_minor AS amount_cents, status FROM settlements ORDER BY id DESC LIMIT %(l)s]
+[pod/settle-api-7df77944fc-59zz9/api] [parameters: {'l': 5}]
+[pod/settle-api-7df77944fc-59zz9/api] (Background on this error at: https://sqlalche.me/e/21/f405)
+[pod/settle-api-7df77944fc-59zz9/api] {"ts": "2026-09-29T02:19:18.193Z", "level": "INFO", "service": "settle-api", "logger": "settle.api", "msg": "request", "request_id": "fe8afe0bbebda0b1fc1dbb7c00a83ef6", "method": "GET", "route": "/reports/daily", "status": 200, "duration_ms": 6440.7}
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 197, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     response = await self.dispatch_func(request, call_next)
+[pod/settle-api-7df77944fc-b2fxn/api]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/app/settle/api.py", line 56, in request_context
+[pod/settle-api-7df77944fc-b2fxn/api]     response = await call_next(request)
+[pod/settle-api-7df77944fc-b2fxn/api]                ^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 173, in call_next
+[pod/settle-api-7df77944fc-b2fxn/api]     raise app_exc from app_exc.__cause__ or app_exc.__context__
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 149, in coro
+[pod/settle-api-7df77944fc-b2fxn/api]     await self.app(scope, receive_or_disconnect, send_no_error)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+[pod/settle-api-7df77944fc-b2fxn/api]     raise exc
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+[pod/settle-api-7df77944fc-b2fxn/api]     await app(scope, receive, sender)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     await self.app(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/routing.py", line 676, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     await self.middleware_stack(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 2734, in app
+[pod/settle-api-7df77944fc-b2fxn/api]     await route.handle(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 1281, in handle
+[pod/settle-api-7df77944fc-b2fxn/api]     await super().handle(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/routing.py", line 282, in handle
+[pod/settle-api-7df77944fc-b2fxn/api]     await self.app(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 158, in app
+[pod/settle-api-7df77944fc-b2fxn/api]     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+[pod/settle-api-7df77944fc-b2fxn/api]     raise exc
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+[pod/settle-api-7df77944fc-b2fxn/api]     await app(scope, receive, sender)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 144, in app
+[pod/settle-api-7df77944fc-b2fxn/api]     response = await f(request)
+[pod/settle-api-7df77944fc-b2fxn/api]                ^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 706, in app
+[pod/settle-api-7df77944fc-b2fxn/api]     raw_response = await run_endpoint_function(
+[pod/settle-api-7df77944fc-b2fxn/api]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 354, in run_endpoint_function
+[pod/settle-api-7df77944fc-b2fxn/api]     return await run_in_threadpool(dependant.call, **values)
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+[pod/settle-api-7df77944fc-b2fxn/api]     return await anyio.to_thread.run_sync(func)
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/anyio/to_thread.py", line 65, in run_sync
+[pod/settle-api-7df77944fc-b2fxn/api]     return await get_async_backend().run_sync_in_worker_thread(
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 2706, in run_sync_in_worker_thread
+[pod/settle-api-7df77944fc-b2fxn/api]     return await future
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1100, in run
+[pod/settle-api-7df77944fc-b2fxn/api]     result = context.run(func, *args)
+[pod/settle-api-7df77944fc-b2fxn/api]              ^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/app/settle/api.py", line 150, in list_settlements
+[pod/settle-api-7df77944fc-b2fxn/api]     c.execute(
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1448, in execute
+[pod/settle-api-7df77944fc-b2fxn/api]     return meth(
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 533, in _execute_on_connection
+[pod/settle-api-7df77944fc-b2fxn/api]     return connection._execute_clauseelement(
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1668, in _execute_clauseelement
+[pod/settle-api-7df77944fc-b2fxn/api]     ret = self._execute_context(
+[pod/settle-api-7df77944fc-b2fxn/api]           ^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1822, in _execute_context
+[pod/settle-api-7df77944fc-b2fxn/api]     return self._exec_single_context(
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1962, in _exec_single_context
+[pod/settle-api-7df77944fc-b2fxn/api]     self._handle_dbapi_exception(
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2332, in _handle_dbapi_exception
+[pod/settle-api-7df77944fc-b2fxn/api]     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1943, in _exec_single_context
+[pod/settle-api-7df77944fc-b2fxn/api]     self.dialect.do_execute(
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 1180, in do_execute
+[pod/settle-api-7df77944fc-b2fxn/api]     cursor.execute(statement, parameters)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/psycopg/cursor.py", line 117, in execute
+[pod/settle-api-7df77944fc-b2fxn/api]     raise ex.with_traceback(None)
+[pod/settle-api-7df77944fc-b2fxn/api] sqlalchemy.exc.ProgrammingError: (psycopg.errors.UndefinedColumn) column "amount_minor" does not exist
+[pod/settle-api-7df77944fc-b2fxn/api] LINE 1: SELECT id, merchant_id, settlement_date, amount_minor AS amo...
+[pod/settle-api-7df77944fc-b2fxn/api]                                                  ^
+[pod/settle-api-7df77944fc-b2fxn/api] [SQL: SELECT id, merchant_id, settlement_date, amount_minor AS amount_cents, status FROM settlements ORDER BY id DESC LIMIT %(l)s]
+[pod/settle-api-7df77944fc-b2fxn/api] [parameters: {'l': 20}]
+[pod/settle-api-7df77944fc-b2fxn/api] (Background on this error at: https://sqlalche.me/e/21/f405)
+[pod/settle-api-7df77944fc-b2fxn/api] {"ts": "2026-09-29T02:18:49.690Z", "level": "INFO", "service": "settle-api", "logger": "settle.api", "msg": "request", "request_id": "7ceb4288ffa1295d7893e22b2f2e57f1", "method": "GET", "route": "/version", "status": 200, "duration_ms": 0.5}
+[pod/settle-api-7df77944fc-b2fxn/api] {"ts": "2026-09-29T02:18:49.893Z", "level": "INFO", "service": "settle-api", "logger": "settle.api", "msg": "request", "request_id": "feb98e407e87ebd554c664b7bfcb2c73", "method": "GET", "route": "/version", "status": 200, "duration_ms": 0.6}
+[pod/settle-api-7df77944fc-b2fxn/api] {"ts": "2026-09-29T02:19:10.124Z", "level": "INFO", "service": "settle-api", "logger": "settle.api", "msg": "request", "request_id": "45f329e433c7b25b9f507d3d17946d74", "method": "GET", "route": "/settlements", "status": 500, "duration_ms": 2.4}
+[pod/settle-api-7df77944fc-b2fxn/api] [2026-09-29 02:19:10 +0000] [13] [ERROR] Exception in ASGI application
+[pod/settle-api-7df77944fc-b2fxn/api] Traceback (most recent call last):
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1943, in _exec_single_context
+[pod/settle-api-7df77944fc-b2fxn/api]     self.dialect.do_execute(
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 1180, in do_execute
+[pod/settle-api-7df77944fc-b2fxn/api]     cursor.execute(statement, parameters)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/psycopg/cursor.py", line 117, in execute
+[pod/settle-api-7df77944fc-b2fxn/api]     raise ex.with_traceback(None)
+[pod/settle-api-7df77944fc-b2fxn/api] psycopg.errors.UndefinedColumn: column "amount_minor" does not exist
+[pod/settle-api-7df77944fc-b2fxn/api] LINE 1: SELECT id, merchant_id, settlement_date, amount_minor AS amo...
+[pod/settle-api-7df77944fc-b2fxn/api]                                                  ^
+[pod/settle-api-7df77944fc-b2fxn/api] 
+[pod/settle-api-7df77944fc-b2fxn/api] The above exception was the direct cause of the following exception:
+[pod/settle-api-7df77944fc-b2fxn/api] 
+[pod/settle-api-7df77944fc-b2fxn/api] Traceback (most recent call last):
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/uvicorn/protocols/http/httptools_impl.py", line 422, in run_asgi
+[pod/settle-api-7df77944fc-b2fxn/api]     result = await app(  # type: ignore[func-returns-value]
+[pod/settle-api-7df77944fc-b2fxn/api]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     return await self.app(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/applications.py", line 1163, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     await super().__call__(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/applications.py", line 96, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     await self.middleware_stack(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 186, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     raise exc
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     await self.app(scope, receive, _send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 197, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     response = await self.dispatch_func(request, call_next)
+[pod/settle-api-7df77944fc-b2fxn/api]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/app/settle/api.py", line 56, in request_context
+[pod/settle-api-7df77944fc-b2fxn/api]     response = await call_next(request)
+[pod/settle-api-7df77944fc-b2fxn/api]                ^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 173, in call_next
+[pod/settle-api-7df77944fc-b2fxn/api]     raise app_exc from app_exc.__cause__ or app_exc.__context__
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/base.py", line 149, in coro
+[pod/settle-api-7df77944fc-b2fxn/api]     await self.app(scope, receive_or_disconnect, send_no_error)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+[pod/settle-api-7df77944fc-b2fxn/api]     raise exc
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+[pod/settle-api-7df77944fc-b2fxn/api]     await app(scope, receive, sender)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     await self.app(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/routing.py", line 676, in __call__
+[pod/settle-api-7df77944fc-b2fxn/api]     await self.middleware_stack(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 2734, in app
+[pod/settle-api-7df77944fc-b2fxn/api]     await route.handle(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 1281, in handle
+[pod/settle-api-7df77944fc-b2fxn/api]     await super().handle(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/routing.py", line 282, in handle
+[pod/settle-api-7df77944fc-b2fxn/api]     await self.app(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 158, in app
+[pod/settle-api-7df77944fc-b2fxn/api]     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+[pod/settle-api-7df77944fc-b2fxn/api]     raise exc
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+[pod/settle-api-7df77944fc-b2fxn/api]     await app(scope, receive, sender)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 144, in app
+[pod/settle-api-7df77944fc-b2fxn/api]     response = await f(request)
+[pod/settle-api-7df77944fc-b2fxn/api]                ^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 706, in app
+[pod/settle-api-7df77944fc-b2fxn/api]     raw_response = await run_endpoint_function(
+[pod/settle-api-7df77944fc-b2fxn/api]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/fastapi/routing.py", line 354, in run_endpoint_function
+[pod/settle-api-7df77944fc-b2fxn/api]     return await run_in_threadpool(dependant.call, **values)
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+[pod/settle-api-7df77944fc-b2fxn/api]     return await anyio.to_thread.run_sync(func)
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/anyio/to_thread.py", line 65, in run_sync
+[pod/settle-api-7df77944fc-b2fxn/api]     return await get_async_backend().run_sync_in_worker_thread(
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 2706, in run_sync_in_worker_thread
+[pod/settle-api-7df77944fc-b2fxn/api]     return await future
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1100, in run
+[pod/settle-api-7df77944fc-b2fxn/api]     result = context.run(func, *args)
+[pod/settle-api-7df77944fc-b2fxn/api]              ^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/app/settle/api.py", line 150, in list_settlements
+[pod/settle-api-7df77944fc-b2fxn/api]     c.execute(
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1448, in execute
+[pod/settle-api-7df77944fc-b2fxn/api]     return meth(
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 533, in _execute_on_connection
+[pod/settle-api-7df77944fc-b2fxn/api]     return connection._execute_clauseelement(
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1668, in _execute_clauseelement
+[pod/settle-api-7df77944fc-b2fxn/api]     ret = self._execute_context(
+[pod/settle-api-7df77944fc-b2fxn/api]           ^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1822, in _execute_context
+[pod/settle-api-7df77944fc-b2fxn/api]     return self._exec_single_context(
+[pod/settle-api-7df77944fc-b2fxn/api]            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1962, in _exec_single_context
+[pod/settle-api-7df77944fc-b2fxn/api]     self._handle_dbapi_exception(
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2332, in _handle_dbapi_exception
+[pod/settle-api-7df77944fc-b2fxn/api]     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1943, in _exec_single_context
+[pod/settle-api-7df77944fc-b2fxn/api]     self.dialect.do_execute(
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 1180, in do_execute
+[pod/settle-api-7df77944fc-b2fxn/api]     cursor.execute(statement, parameters)
+[pod/settle-api-7df77944fc-b2fxn/api]   File "/venv/lib/python3.12/site-packages/psycopg/cursor.py", line 117, in execute
+[pod/settle-api-7df77944fc-b2fxn/api]     raise ex.with_traceback(None)
+[pod/settle-api-7df77944fc-b2fxn/api] sqlalchemy.exc.ProgrammingError: (psycopg.errors.UndefinedColumn) column "amount_minor" does not exist
+[pod/settle-api-7df77944fc-b2fxn/api] LINE 1: SELECT id, merchant_id, settlement_date, amount_minor AS amo...
+[pod/settle-api-7df77944fc-b2fxn/api]                                                  ^
+[pod/settle-api-7df77944fc-b2fxn/api] [SQL: SELECT id, merchant_id, settlement_date, amount_minor AS amount_cents, status FROM settlements ORDER BY id DESC LIMIT %(l)s]
+[pod/settle-api-7df77944fc-b2fxn/api] [parameters: {'l': 5}]
+[pod/settle-api-7df77944fc-b2fxn/api] (Background on this error at: https://sqlalche.me/e/21/f405)
+[pod/settle-api-7df77944fc-b2fxn/api] {"ts": "2026-09-29T02:19:10.139Z", "level": "INFO", "service": "settle-api", "logger": "settle.api", "msg": "settlement enqueued", "request_id": "verify-post-1", "job_id": "1cc94e374e1d4ec0a84e9948507c7ec2", "merchant_id": 1, "settlement_date": "2026-09-29"}
+[pod/settle-api-7df77944fc-b2fxn/api] {"ts": "2026-09-29T02:19:10.140Z", "level": "INFO", "service": "settle-api", "logger": "settle.api", "msg": "request", "request_id": "verify-post-1", "method": "POST", "route": "/settlements", "status": 202, "duration_ms": 1.9}

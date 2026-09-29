@@ -1,0 +1,1 @@
+Error from server (BadRequest): previous terminated container "api" in pod "settle-api-7df77944fc-59zz9" not found
