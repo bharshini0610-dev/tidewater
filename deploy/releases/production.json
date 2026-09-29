@@ -2,7 +2,7 @@
   "version": "1.9.0",
   "image": "settle-api",
   "digest": "sha256:4bf6f884e5cc7a018a09246f675e94377025cb7460920e2a0bbb778a3f20edc4",
-  "run_id": "36508780340",
-  "commit": "e97e7322248f1d36d1b2ff542160a9e6bb21e692",
+  "run_id": "36510315319",
+  "commit": "89ebabfd2acb703b1405ce35cb9421224493f60b",
   "artifact": "image-1.9.0"
 }
