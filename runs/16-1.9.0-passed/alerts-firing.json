@@ -1,0 +1,22 @@
+{
+    "status": "success",
+    "data": {
+        "alerts": [
+            {
+                "labels": {
+                    "alertname": "SettleApiErrorBudgetBurn",
+                    "service": "settle",
+                    "severity": "page"
+                },
+                "annotations": {
+                    "description": "25.56% of API requests are failing or slower than 500 ms.",
+                    "runbook_url": "https://github.com/bharshini0610-dev/tidewater/blob/main/docs/RUNBOOK.md#settleapierrorbudgetburn",
+                    "summary": "settle-api is burning its availability/latency error budget 14x too fast"
+                },
+                "state": "firing",
+                "activeAt": "2026-09-29T01:47:18.212304771Z",
+                "value": "2.555987216542387e-01"
+            }
+        ]
+    }
+}

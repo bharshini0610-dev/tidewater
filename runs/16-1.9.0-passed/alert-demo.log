@@ -1,0 +1,24 @@
+[{"attributes":{"latency":3000,"jitter":0},"name":"latency","type":"latency","stream":"downstream","toxicity":1}]
+[01:46:31Z] chaos-db on 3000ms
+[01:46:31Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[01:46:41Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[01:46:52Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[01:47:02Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0  api restarts=0
+[01:47:12Z] SettleApiErrorBudgetBurn: inactive   error ratio 5m=0.09515260877237941  api restarts=0
+[01:47:22Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.09515260877237941  api restarts=0
+[01:47:32Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.12593585606337876  api restarts=0
+[01:47:43Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.15291770143368377  api restarts=0
+[01:47:53Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.17516011217518646  api restarts=0
+[01:48:03Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.17516011217518646  api restarts=0
+[01:48:13Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.19479126813882186  api restarts=0
+[01:48:24Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.21292949921942872  api restarts=0
+[01:48:34Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.21292949921942872  api restarts=0
+[01:48:44Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.227618991476363  api restarts=0
+[01:48:55Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.23987666199901936  api restarts=0
+[01:49:05Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.23987666199901936  api restarts=0
+[01:49:15Z] SettleApiErrorBudgetBurn: pending   error ratio 5m=0.2555987216542387  api restarts=0
+[01:49:26Z] SettleApiErrorBudgetBurn: firing   error ratio 5m=0.2815024710474745  api restarts=0
+screenshots written to out/evidence
+[]
+[01:49:55Z] chaos-db off 3000ms
+[01:51:25Z] alert SettleApiErrorBudgetBurn state=firing after 175s; restarts 0 -> 0
